@@ -1,0 +1,891 @@
+<mvc:View controllerName="crm.third_party_lgst.controller.ObjectEdit" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:m="sap.m"
+	xmlns:f="sap.ui.layout.form" xmlns:uxap="sap.uxap" xmlns:layout="sap.ui.layout" xmlns:table="sap.ui.table" xmlns:unified="sap.ui.unified"
+	xmlns:suite="sap.suite.ui.commons" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:v="sap.ui.comp.variants" xmlns:upload="sap.m.upload">
+	<uxap:ObjectPageLayout id="opLayout" navigate="onSectionChange" showTitleInHeaderContent="false"
+		showHeaderContent="true" showEditHeaderButton="false" showFooter="false" class="sapUiSizeCompact" flexEnabled="true">
+		<uxap:headerTitle>
+			<uxap:ObjectPageHeader objectTitle="{i18n>detailTitle}" objectSubtitle="{edit>/ObjectId}" isObjectIconAlwaysVisible="false"
+				isObjectTitleAlwaysVisible="true" isObjectSubtitleAlwaysVisible="true" showPlaceholder="true">
+				<uxap:navigationBar>
+					<m:Bar>
+						<m:contentLeft>
+							<m:Button type="Back" press="onNavBack"/>
+						</m:contentLeft>
+					</m:Bar>
+				</uxap:navigationBar>
+				<uxap:actions>
+					<m:Button text="{i18n>buttonTextSave}" type="Emphasized" press="onSave"/>
+					<m:Button text="{i18n>buttonTextCancel}" type="Emphasized" press="onCancelEdit"/>
+				</uxap:actions>
+			</uxap:ObjectPageHeader>
+		</uxap:headerTitle>
+		<uxap:headerContent>
+			<f:Form editable="false" width="100%">
+				<f:layout>
+					<f:ResponsiveGridLayout labelSpanXL="6" labelSpanL="6" labelSpanM="6" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+						emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="true"/>
+				</f:layout>
+				<f:title>
+					<core:Title id="Title1" text="Kayıt Özeti"/>
+				</f:title>
+				<f:formContainers>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="{i18n>custName}">
+								<f:fields>
+									<m:Input enabled="false" id="customerSum"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>custSeg}">
+								<f:fields>
+									<m:Input enabled="false" id="idCustSeg"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>dealer}">
+								<f:fields>
+									<m:Input enabled="false" id="dealer"/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement id="statusComboFE" label="{i18n>status}">
+								<f:fields>
+									<!--<m:ComboBox change="handleStatusChange" id="statusCombo"-->
+									<!--	items="{path:'/SearchHelpOrderStatusSet', filters:[{ path: 'Code', operator: 'EQ', value1: '0001'}]}"-->
+									<!--	selectedKey="{edit>/Tostatus/UserStatus}">-->
+									<!--	<core:Item key="{Estat}" text="{Txt30}"/>-->
+									<!--</m:ComboBox>-->
+									<m:ComboBox change="handleStatusChange" id="statusCombo" items="{path:'edit>/ToSearchHelpOrderStatus/results'}"
+										selectedKey="{edit>/Tostatus/UserStatus}">
+										<core:Item key="{edit>Estat}" text="{edit>Txt30}"/>
+									</m:ComboBox>
+									<!--<m:Text text="{path:'edit>/Tostatus/Txt30'}"/>-->
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement id="statusReasonFE" label="{i18n>statusReason}">
+								<f:fields>
+									<m:ComboBox change="handleStatusReasonChange" id="statusReason" items="{path:'edit>/ToHeaderStatusReason/results'}"
+										selectedKey="{edit>/StatusReason}">
+										<core:Item key="{edit>Key}" text="{edit>Value}"/>
+									</m:ComboBox>
+									<!--<m:Text text="{path:'edit>/Tostatus/Txt30'}"/>-->
+								</f:fields>
+							</f:FormElement>
+							<!--<f:FormElement label="{i18n>docType}">-->
+							<!--	<f:fields>-->
+							<!--		<m:Input enabled="false" value="{edit>/ToCustomerh/Zz1BelgeTipiSrhTxt}"/>-->
+							<!--	</f:fields>-->
+							<!--</f:FormElement>-->
+							<!--<f:FormElement label="{i18n>status}">-->
+							<!--	<f:fields>-->
+							<!--		<m:ComboBox change="handleStatusChange" id="statusCombo"-->
+							<!--			items="{path:'/SearchHelpOrderStatusSet', filters:[{ path: 'Code', operator: 'EQ', value1: '0001'}]}"-->
+							<!--			selectedKey="{edit>/Tostatus/UserStatus}">-->
+							<!--			<core:Item key="{Estat}" text="{Txt30}"/>-->
+							<!--		</m:ComboBox>-->
+							<!--	</f:fields>-->
+							<!--</f:FormElement>-->
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="{i18n>createdBy}">
+								<f:fields>
+									<m:Input enabled="fales" value="{edit>/CreatedByText}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>createdAt}">
+								<f:fields>
+									<m:Input enabled="false" value="{path:'edit>/NowCreatedAt', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd.MM.yyyy'}}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>changedAt}">
+								<f:fields>
+									<m:Input enabled="false" value="{path:'edit>/ChangedAtDate', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd.MM.yyyy'}}"/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form>
+		</uxap:headerContent>
+		<uxap:sections>
+			<uxap:ObjectPageSection id="customerSection" title="{i18n>custInf}" titleUppercase="false">
+				<uxap:ObjectPageSubSection>
+					<uxap:blocks>
+						<f:Form editable="false">
+							<f:layout>
+								<f:ResponsiveGridLayout labelSpanXL="6" labelSpanL="6" labelSpanM="6" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+									emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false"/>
+							</f:layout>
+							<f:formContainers>
+								<f:FormContainer>
+									<f:formElements>
+										<f:FormElement id="customerFE" label="{i18n>custName}">
+											<f:fields>
+												<m:Input enabled="fales" id="customer"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement id="customerTelFE" label="{i18n>custTel}">
+											<f:fields>
+												<m:Input enabled="false" id="customerTel"/>
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+								<f:FormContainer>
+									<f:formElements>
+										<f:FormElement id="recordCountFE" label="{i18n>recordCount}">
+											<f:fields>
+												<!--<m:Input id="recorsdCount" text="{edit>/ToCustomerh/Zz1YasalSurecMiSrhTxt}"/>-->
+												<m:Input enabled="false" id="recordCount"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement id="productRecordCountFE" label="{i18n>productRecordCount}">
+											<f:fields>
+												<m:Input enabled="false" id="productRecordCount"/>
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+							</f:formContainers>
+						</f:Form>
+					</uxap:blocks>
+				</uxap:ObjectPageSubSection>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection id="generalSection" title="{i18n>generalInf}" titleUppercase="false">
+				<uxap:ObjectPageSubSection>
+					<uxap:blocks>
+						<f:Form editable="false">
+							<f:layout>
+								<f:ResponsiveGridLayout labelSpanXL="6" labelSpanL="6" labelSpanM="6" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+									emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false"/>
+							</f:layout>
+							<f:formContainers>
+								<f:FormContainer>
+									<f:formElements>
+										<f:FormElement label="{i18n>orderNo}">
+											<f:fields>
+												<m:Button icon="sap-icon://search" text="{i18>findOrder}" press="handleFindOrderPress"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement id="productFE" label="{i18n>product}">
+											<f:fields>
+												<m:Input enabled="false" value="{edit>/ToRefObj/TextObject}"/>
+												<m:Input id="product" required="true" liveChange="handleGeneralStepValidation" valueHelpOnly="true" showValueHelp="true"
+													valueHelpRequest="handleProductHelp" value="{edit>/ToRefObj/ProductId}"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement id="invoiceFE" label="{i18n>billNo}">
+											<f:fields>
+												<m:Input id="invoice" value="{edit>/ToCustomerh/Zz1FaturaNoSrh}"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement id="invoiceDateFE" label="{i18n>billDate}">
+											<f:fields>
+												<m:DatePicker change="handleInvoiceChange" id="invoiceDate"
+													dateValue="{path:'edit>/ToCustomerh/Zz1FaturaTarihSrh', formatter:'.faturaTarihFormatter'}"/>
+												<!--<m:Text text="{path:'edit>/ToCustomerh/Zz1FaturaTarihSrh', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd.MM.yyyy'}}"/>-->
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement id="guaranteedFE" label="{i18n>guaranteed}">
+											<f:fields>
+												<m:Switch id="guaranteed" enabled="false" change="acIndicatorChange"
+													state="{path:'edit>/ToPricing/AcIndicator', formatter:'.acIndFormatter'}" customTextOn="{i18n>yes}" customTextOff="{i18n>no}"/>
+												<!--<m:Text text="{edit>/ToPricing/AcIndicatorTxt}"/>-->
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+								<f:FormContainer>
+									<f:formElements>
+										<f:FormElement id="salePointFE" label="{i18n>salePoint}">
+											<f:fields>
+												<m:Input enabled="false" value="{edit>/ToCustomerh/Zz1SatisNoktasiSrhTxt}"/>
+												<m:Input id="salePoint" value="{edit>/ToCustomerh/Zz1SatisNoktasiSrh}" valueHelpOnly="true" showValueHelp="true"
+													valueHelpRequest="handleSalePointSH"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement id="plantFE" label="{i18n>plant}">
+											<f:fields>
+												<m:Input enabled="false" value="{edit>/ToProductInfo/ZzfiiliUyTxt}" id="plant"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement id="materialGroupFE" label="{i18n>materialGroup}">
+											<f:fields>
+												<m:Input enabled="false" value="{edit>/ToProductInfo/MatklTxt}" id="materialGroup"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement id="returnToSupplierFE" label="{i18n>returnToSupplier}">
+											<f:fields>
+												<m:Switch id="returnToSupplier" change="returnToSupplierChange"
+													state="{path:'edit>/ToCustomerh/Zz1TicariurunIadeSrh', formatter:'.xfeldToBool'}" customTextOn="{i18n>yes}" customTextOff="{i18n>no}"/>
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+							</f:formContainers>
+						</f:Form>
+					</uxap:blocks>
+				</uxap:ObjectPageSubSection>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection id="recordInfoTab" title="{i18n>recordInfo}" titleUppercase="false">
+				<uxap:ObjectPageSubSection>
+					<uxap:blocks>
+						<f:Form editable="false">
+							<f:layout>
+								<f:ResponsiveGridLayout labelSpanXL="6" labelSpanL="6" labelSpanM="6" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+									emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false"/>
+							</f:layout>
+							<f:formContainers>
+								<f:FormContainer>
+									<f:formElements>
+										<f:FormElement id="createdAtFE" label="{i18n>createdAt}">
+											<f:fields>
+												<m:Text text="{path:'edit>/NowCreatedAt', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd.MM.yyyy'}}"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="{i18n>changedAt}">
+											<f:fields>
+												<m:Text text="{path:'edit>/ChangedAtDate', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd.MM.yyyy'}}"/>
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+								<f:FormContainer>
+									<f:formElements>
+										<f:FormElement label="{i18n>createdBy}">
+											<f:fields>
+												<m:Text text="{edit>/CreatedByText}"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="{i18n>completedAt}">
+											<f:fields>
+												<m:Text text="{path:'edit>/ChangedAtDate', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd.MM.yyyy'}}"/>
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+							</f:formContainers>
+						</f:Form>
+					</uxap:blocks>
+				</uxap:ObjectPageSubSection>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection id="itemSection" title="{i18n>itemTitle}" titleUppercase="false">
+				<uxap:ObjectPageSubSection>
+					<uxap:blocks>
+						<table:Table class="sapUiTinyMarginBottom" id="idSpItemTable" rows="{ path: 'edit>/ToSpItems/results'}" selectionMode="None"
+							visibleRowCount="10" editable="false">
+							<table:extension>
+								<m:OverflowToolbar style="Clear">
+									<m:Title text="Yedek Parça"/>
+									<m:ToolbarSpacer/>
+									<m:Button text="Ürün Önerisi" press="handleYedekParEkle"/>
+								</m:OverflowToolbar>
+							</table:extension>
+							<table:columns>
+								<table:Column width="5rem" id="deleteButtonFE" hAlign="Center">
+									<m:Label text="{i18n>transition}"/>
+									<table:template>
+										<m:Button id="deleteButton" tooltip="Sil" icon="sap-icon://delete" press="handleItemDelete"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center">
+									<m:Label text="{i18n>itemNo}"/>
+									<table:template>
+										<m:Text text="{= parseInt(${path: 'edit>NumberInt'})}"/>
+									</table:template>
+								</table:Column>
+								<table:Column width="10rem" hAlign="Center">
+									<m:Label text="{i18n>orderProd}"/>
+									<table:template>
+										<m:Text text="{path: 'edit>OrderedProd'}"/>
+									</table:template>
+								</table:Column>
+								<table:Column id="spQuantityCol" width="5rem" hAlign="Center">
+									<m:Label text="{i18n>quan}"/>
+									<table:template>
+										<m:Input id="spQuantity" value="{path: 'edit>Quantity'}"/>
+									</table:template>
+								</table:Column>
+								<!--<table:Column hAlign="Center">-->
+								<!--	<m:Label text="{i18n>curr}"/>-->
+								<!--	<table:template>-->
+								<!--		<m:Text text="{path: 'edit>ProcessQtyUnit'}"/>-->
+								<!--	</table:template>-->
+								<!--</table:Column>-->
+								<table:Column width="10rem" hAlign="Center">
+									<m:Label text="{i18n>prod}"/>
+									<table:template>
+										<m:Text text="{path: 'edit>Description'}"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center" id="acIndSPCol">
+									<m:Label text="{i18n>acInd}"/>
+									<table:template>
+										<m:Switch id="acIndSP" enabled="false" change="ItemAcIndicatorChange" state="{path:'edit>AcIndicator', formatter:'.acIndFormatter'}"
+											customTextOn="{i18n>yes}" customTextOff="{i18n>no}"/>
+									</table:template>
+								</table:Column>
+								<table:Column width="8rem" hAlign="Center">
+									<m:Label text="{i18n>itemType}"/>
+									<table:template>
+										<m:Text text="{path: 'edit>ItemTypeDescr'}"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center">
+									<m:Label text="{i18n>netValue}"/>
+									<table:template>
+										<m:Text text="{path: 'edit>NetValue'}"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center">
+									<m:Label text="{i18n>orderNo}"/>
+									<table:template>
+										<m:Text text="{path: 'edit>DocObj'}"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center">
+									<m:Label text="{i18n>orderDate}"/>
+									<table:template>
+										<m:Text text="{path: 'edit>DocCreateDate'}"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center">
+									<m:Label text="{i18n>orderEndDate}"/>
+									<table:template>
+										<m:Text text="{path: 'edit>DocEndDate'}"/>
+									</table:template>
+								</table:Column>
+								<!--<table:Column hAlign="Center">-->
+								<!--	<m:Label text="{i18n>curr}"/>-->
+								<!--	<table:template>-->
+								<!--		<m:Text text="{path: 'edit>Currency'}"/>-->
+								<!--	</table:template>-->
+								<!--</table:Column>-->
+								<table:Column hAlign="Center">
+									<m:Label text="{i18n>status}"/>
+									<table:template>
+										<m:Text text="{path: 'edit>Statustxt'}"/>
+									</table:template>
+								</table:Column>
+							</table:columns>
+						</table:Table>
+					</uxap:blocks>
+				</uxap:ObjectPageSubSection>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection id="noteSection" title="{i18n>titleNotes}" titleUppercase="false">
+				<uxap:ObjectPageSubSection>
+					<uxap:blocks>
+						<m:VBox>
+							<m:Select id="idTextId"
+								items="{ path: 'valueHelp>/ValueHelpSet', filters: [{ path: 'Code', operator: 'EQ', value1: '0005' }, { path: 'Extension1', operator: 'EQ', value1: 'ZC13' }]}">
+								<m:items>
+									<core:Item key="{valueHelp>Key}" text="{valueHelp>Value}"/>
+								</m:items>
+							</m:Select>
+							<m:FeedInput id="idNoteFeedInput" showIcon="true" placeholder="{i18n>placeholderEnterNewNote}" post="onPostNote"/>
+							<m:List items="{edit>/ToTexts/results}" growing="true" growingThreshold="4" growingScrollToLoad="false" backgroundDesign="Solid">
+								<m:items>
+									<m:FeedListItem icon="sap-icon://notes" sender="{edit>Tdtext}" text="{edit>ConcLines}" info="{edit>Tdfuser}"
+										timestamp="{path: 'edit>Tdfdate', type:'sap.ui.model.type.DateTime', formatOptions: { style: 'medium'}}"/>
+								</m:items>
+							</m:List>
+						</m:VBox>
+					</uxap:blocks>
+				</uxap:ObjectPageSubSection>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection id="attachmentsTab" title="{i18n>titleAttachments}" titleUppercase="false">
+				<uxap:ObjectPageSubSection>
+					<uxap:blocks>
+						<m:Table id="idTable" mode="Delete" delete="handleAttachmentItemPress"
+							items="{path: 'edit>/ToAttachments/results',sorter: { path: 'AttachTypeTxt', descending: false, group: '.getGroup' }, groupHeaderFactory: '.getGroupHeader'}">
+							<m:headerToolbar>
+								<m:OverflowToolbar>
+									<m:ToolbarSpacer/>
+									<m:Label text="Tür:" />
+									<m:Select id="idUploadSelect" forceSelection="false" change="handleChangeUploadSelect" items="{ path: 'valueHelp>/ValueHelpSet', filters: [{ path: 'Code', operator: 'EQ', value1: '0023' },{ path: 'Extension1', operator: 'EQ', value1: 'ZC05' }] }">
+										<m:items>
+											<core:Item key="{valueHelp>Key}" text="{valueHelp>Value}"/>
+										</m:items>
+									</m:Select>
+									<unified:FileUploader fileType="JPG,JPEG,jpeg,jpg,PNG,png,PDF,pdf,xls,xlsx,csv" useMultipart="false" id="fileUploader" name="myFileUpload"
+										sameFilenameAllowed="true" tooltip="Fatura fotoğrafı yükle" uploadComplete="onUploadCompleted"/>
+									<m:Button icon="sap-icon://upload" type="Default" text="Yükle" press="handleUploadAttachment"></m:Button>
+								</m:OverflowToolbar>
+							</m:headerToolbar>
+							<m:columns>
+								<m:Column>
+									<m:Text text="Ad"/>
+								</m:Column>
+								<m:Column>
+									<m:Text text="Ek Tipi"/>
+								</m:Column>
+								<m:Column>
+									<m:Text text="Oluşturan"/>
+								</m:Column>
+								<m:Column>
+									<m:Text text="Tarih"/>
+								</m:Column>
+							</m:columns>
+							<m:items>
+								<m:ColumnListItem>
+									<m:cells>
+										<m:Link text="{edit>Filename}" target="_blank" href="{edit>UrlToDisplay}"/>
+										<m:Text text="{edit>ContentType}"/>
+										<m:Text text="{edit>CreatedBy}"/>
+										<m:Text text="{path: 'edit>CreatedAt', type:'sap.ui.model.type.DateTime', formatOptions: { style: 'medium'}}"/>
+									</m:cells>
+								</m:ColumnListItem>
+							</m:items>
+						</m:Table>
+						<!--<m:VBox>-->
+						<!--	<m:HBox justifyContent="SpaceBetween">-->
+						<!--		<upload:UploadSet uploadCompleted="handle01UploadComplete" class="sapUiTinyMarginEnd" afterItemRemoved="handleAfterItemRemoved"-->
+						<!--			beforeItemAdded="handleBefore01ItemAdd" beforeUploadStarts="handleBefore01UploadStarts" uploadEnabled="false" uploadButtonInvisible="false"-->
+						<!--			id="UploadSet" items="{edit>/ToAttachments01/results}">-->
+						<!--			<upload:layoutData>-->
+						<!--				<m:FlexItemData growFactor="1"/>-->
+						<!--			</upload:layoutData>-->
+						<!--			<upload:toolbar>-->
+						<!--				<m:OverflowToolbar>-->
+						<!--					<m:Title text="Müşteriden Ürün Fotoğrafı"/>-->
+						<!--					<m:ToolbarSpacer/>-->
+						<!--					<unified:FileUploader useMultipart="false" fileType="JPG,JPEG,jpeg,jpg,PNG,png,pdf,PDF,xls,xlsx,csv" id="fileUploader" name="myFileUpload"-->
+						<!--						tooltip="Fatura fotoğrafı yükle" uploadStart="handleUploadStart" uploadComplete="handleImageUploadComplete"/>-->
+						<!--					<m:Button press="handleUpload01Attachment" text="Yükle"/>-->
+						<!--				</m:OverflowToolbar>-->
+						<!--			</upload:toolbar>-->
+						<!--			<upload:items>-->
+						<!--				<upload:UploadSetItem enabledRemove="true" enabledEdit="true" visibleEdit="false" visibleRemove="true" fileName="{edit>Filename}"-->
+						<!--					mediaType="{edit>ContentType}" url="{edit>UrlToDisplay}"></upload:UploadSetItem>-->
+						<!--			</upload:items>-->
+						<!--		</upload:UploadSet>-->
+						<!--		<upload:UploadSet uploadCompleted="handle02UploadComplete" uploadEnabled="true" uploadButtonInvisible="false" id="UploadSet1"-->
+						<!--			items="{edit>/ToAttachments02/results}" afterItemRemoved="handleAfterItemRemoved" beforeItemAdded="handleBefore02ItemAdd"-->
+						<!--			beforeUploadStarts="handleBefore02UploadStarts">-->
+						<!--			<upload:layoutData>-->
+						<!--				<m:FlexItemData growFactor="1"/>-->
+						<!--			</upload:layoutData>-->
+						<!--			<upload:toolbar>-->
+						<!--				<m:OverflowToolbar>-->
+						<!--					<m:Title text="Fatura Fotoğrafı"/>-->
+						<!--					<m:ToolbarSpacer/>-->
+						<!--					<unified:FileUploader useMultipart="false" fileType="JPG,JPEG,jpeg,jpg,PNG,png,pdf,PDF,xls,xlsx,csv" id="fileUploader1" name="myFileUpload"-->
+						<!--						tooltip="Fatura fotoğrafı yükle" uploadStart="handleUploadStart" uploadComplete="handleImageUploadComplete"/>-->
+						<!--					<m:Button press="handleUpload02Attachment" text="Yükle"/>-->
+						<!--				</m:OverflowToolbar>-->
+						<!--			</upload:toolbar>-->
+						<!--			<upload:items>-->
+						<!--				<upload:UploadSetItem enabledRemove="true" enabledEdit="true" visibleEdit="false" visibleRemove="true"-->
+						<!--					removePressed="handleAttachRemovePress" fileName="{edit>Filename}" mediaType="{edit>ContentType}" url="{edit>UrlToDisplay}"></upload:UploadSetItem>-->
+						<!--			</upload:items>-->
+						<!--		</upload:UploadSet>-->
+						<!--	</m:HBox>-->
+						<!--	<m:HBox justifyContent="SpaceBetween">-->
+						<!--		<upload:UploadSet uploadCompleted="handle03UploadComplete" class="sapUiTinyMarginEnd" uploadEnabled="true" uploadButtonInvisible="false"-->
+						<!--			id="UploadSet2" items="{edit>/ToAttachments03/results}" beforeItemAdded="handleBefore03ItemAdd" afterItemRemoved="handleAfterItemRemoved"-->
+						<!--			beforeUploadStarts="handleBefore03UploadStarts">-->
+						<!--			<upload:layoutData>-->
+						<!--				<m:FlexItemData growFactor="1"/>-->
+						<!--			</upload:layoutData>-->
+						<!--			<upload:toolbar>-->
+						<!--				<m:OverflowToolbar>-->
+						<!--					<m:Title text="Öncesi Fotoğrafı"/>-->
+						<!--					<m:ToolbarSpacer/>-->
+						<!--					<unified:FileUploader useMultipart="false" fileType="JPG,JPEG,jpeg,jpg,PNG,png,pdf,PDF,xls,xlsx,csv" id="fileUploader2" name="myFileUpload"-->
+						<!--						tooltip="Fatura fotoğrafı yükle" uploadStart="handleUploadStart" uploadComplete="handleImageUploadComplete"/>-->
+						<!--					<m:Button press="handleUpload03Attachment" text="Yükle"/>-->
+						<!--				</m:OverflowToolbar>-->
+						<!--			</upload:toolbar>-->
+						<!--			<upload:items>-->
+						<!--				<upload:UploadSetItem enabledRemove="true" enabledEdit="true" visibleEdit="false" visibleRemove="true"-->
+						<!--					removePressed="handleAttachRemovePress" fileName="{edit>Filename}" mediaType="{edit>ContentType}" url="{edit>UrlToDisplay}"></upload:UploadSetItem>-->
+						<!--			</upload:items>-->
+						<!--		</upload:UploadSet>-->
+						<!--		<upload:UploadSet uploadCompleted="handle04UploadComplete" uploadEnabled="true" uploadButtonInvisible="false" id="UploadSet3"-->
+						<!--			items="{edit>/ToAttachments04/results}" beforeItemAdded="handleBefore04ItemAdd" afterItemRemoved="handleAfterItemRemoved"-->
+						<!--			beforeUploadStarts="handleBefore04UploadStarts">-->
+						<!--			<upload:layoutData>-->
+						<!--				<m:FlexItemData growFactor="1"/>-->
+						<!--			</upload:layoutData>-->
+						<!--			<upload:toolbar>-->
+						<!--				<m:OverflowToolbar>-->
+						<!--					<m:Title text="Sonrası Fotoğrafı"/>-->
+						<!--					<m:ToolbarSpacer/>-->
+						<!--					<unified:FileUploader useMultipart="false" fileType="JPG,JPEG,jpeg,jpg,PNG,png,pdf,PDF,xls,xlsx,csv" id="fileUploader3" name="myFileUpload"-->
+						<!--						tooltip="Fatura fotoğrafı yükle" uploadStart="handleUploadStart" uploadComplete="handleImageUploadComplete"/>-->
+						<!--					<m:Button press="handleUpload04Attachment" text="Yükle"/>-->
+						<!--				</m:OverflowToolbar>-->
+						<!--			</upload:toolbar>-->
+						<!--			<upload:items>-->
+						<!--				<upload:UploadSetItem enabledRemove="true" enabledEdit="true" visibleEdit="false" visibleRemove="true"-->
+						<!--					removePressed="handleAttachRemovePress" fileName="{edit>Filename}" mediaType="{edit>ContentType}" url="{edit>UrlToDisplay}"></upload:UploadSetItem>-->
+						<!--			</upload:items>-->
+						<!--		</upload:UploadSet>-->
+						<!--	</m:HBox>-->
+						<!--</m:VBox>-->
+					</uxap:blocks>
+				</uxap:ObjectPageSubSection>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection id="errorSection" title="{i18n>errorHeader}" titleUppercase="false">
+				<uxap:ObjectPageSubSection>
+					<f:Form editable="false">
+						<f:layout>
+							<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4"
+								emptySpanM="4" emptySpanS="4" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="true"/>
+						</f:layout>
+						<f:formContainers>
+							<f:FormContainer>
+								<f:formElements>
+									<f:FormElement id="sourceOfErrorFE" label="{i18n>sourceOfError}">
+										<f:fields>
+											<m:ComboBox id="sourceOfError" change="handleSourceOfErrorSelect" selectedKey="{edit>/ToCustomerh/Zz1HKaynagiSdSrh}"
+												items="{ path: 'valueHelp>/ValueHelpSet', filters: [{ path: 'Code', operator: 'EQ', value1: '0009' }]}">
+												<m:items>
+													<core:ListItem key="{valueHelp>Key}" text="{valueHelp>Value}"/>
+												</m:items>
+											</m:ComboBox>
+											<!--<m:Input value="{edit>/ToCustomerh/Zz1HKaynagiSdSrhTxt}"/>-->
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement id="soeCB1FE" label="{i18n>category1}">
+										<f:fields>
+											<m:ComboBox loadItems="handleLoadSOE1Items" selectionChange="handleSOECB1Select" id="soeCB1" selectedKey="{edit>/ToCategory/results/0/Value}"
+												items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '01' }]}">
+												<m:items>
+													<core:ListItem key="{Key}" text="{Value}"/>
+												</m:items>
+											</m:ComboBox>
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement id="soeCB2FE" label="{i18n>category2}">
+										<f:fields>
+											<m:ComboBox loadItems="handleLoadSOE2Items" selectionChange="handleSOECB2Select" id="soeCB2" selectedKey="{edit>/ToCategory/results/1/Value}"
+												items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '02' }]}">
+												<m:items>
+													<core:ListItem key="{Key}" text="{Value}"/>
+												</m:items>
+											</m:ComboBox>
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement id="soeCB3FE" label="{i18n>category3}">
+										<f:fields>
+											<m:ComboBox loadItems="handleLoadSOE3Items" selectionChange="handleSOECB3Select" id="soeCB3" selectedKey="{edit>/ToCategory/results/2/Value}"
+												items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '03' }]}">
+												<m:items>
+													<core:ListItem key="{Key}" text="{Value}"/>
+												</m:items>
+											</m:ComboBox>
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement id="soeCB4FE" label="{i18n>category4}">
+										<f:fields>
+											<m:ComboBox loadItems="handleLoadSOE4Items" selectionChange="handleSOECB4Select" id="soeCB4" selectedKey="{edit>/ToCategory/results/3/Value}"
+												items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '04' }]}">
+												<m:items>
+													<core:ListItem key="{Key}" text="{Value}"/>
+												</m:items>
+											</m:ComboBox>
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement id="soeCB5FE" label="{i18n>category5}">
+										<f:fields>
+											<m:ComboBox loadItems="handleLoadSOE5Items" selectionChange="handleSOECB5Select" id="soeCB5" selectedKey="{edit>/ToCategory/results/4/Value}"
+												items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '05' }]}">
+												<m:items>
+													<core:ListItem key="{Key}" text="{Value}"/>
+												</m:items>
+											</m:ComboBox>
+										</f:fields>
+									</f:FormElement>
+								</f:formElements>
+								<!--<f:formElements>-->
+								<!--	<f:FormElement id="sourceOfErrorFE" label="{i18n>sourceOfError}">-->
+								<!--		<f:fields>-->
+								<!--			<m:ComboBox id="sourceOfError" change="handleSourceOfErrorSelect" selectedKey="{edit>/ToCustomerh/Zz1HKaynagiSdSrh}"-->
+								<!--				items="{ path: 'valueHelp>/ValueHelpSet', filters: [{ path: 'Code', operator: 'EQ', value1: '0009' }]}">-->
+								<!--				<m:items>-->
+								<!--					<core:ListItem key="{valueHelp>Key}" text="{valueHelp>Value}"/>-->
+								<!--				</m:items>-->
+								<!--			</m:ComboBox>-->
+											<!--<m:Input value="{edit>/ToCustomerh/Zz1HKaynagiSdSrhTxt}"/>-->
+								<!--		</f:fields>-->
+								<!--	</f:FormElement>-->
+								<!--	<f:FormElement id="soeCB1FE" label="{i18n>category1}">-->
+								<!--		<f:fields>-->
+								<!--			<m:ComboBox loadItems="handleLoadSOE1Items" change="handleSOECB1Select" id="soeCB1" selectedKey="{edit>/ToCategory/results/0/Value}"-->
+								<!--				items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '01' }]}">-->
+								<!--				<m:items>-->
+								<!--					<core:ListItem key="{Key}" text="{Value}"/>-->
+								<!--				</m:items>-->
+								<!--			</m:ComboBox>-->
+								<!--		</f:fields>-->
+								<!--	</f:FormElement>-->
+								<!--	<f:FormElement id="soeCB2FE" label="{i18n>category2}">-->
+								<!--		<f:fields>-->
+								<!--			<m:ComboBox loadItems="handleLoadSOE2Items" change="handleSOECB2Select" id="soeCB2" selectedKey="{edit>/ToCategory/results/1/Value}"-->
+								<!--				items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '02' }]}">-->
+								<!--				<m:items>-->
+								<!--					<core:ListItem key="{Key}" text="{Value}"/>-->
+								<!--				</m:items>-->
+								<!--			</m:ComboBox>-->
+								<!--		</f:fields>-->
+								<!--	</f:FormElement>-->
+								<!--	<f:FormElement id="soeCB3FE" label="{i18n>category3}">-->
+								<!--		<f:fields>-->
+								<!--			<m:ComboBox loadItems="handleLoadSOE3Items" change="handleSOECB3Select" id="soeCB3" selectedKey="{edit>/ToCategory/results/2/Value}"-->
+								<!--				items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '03' }]}">-->
+								<!--				<m:items>-->
+								<!--					<core:ListItem key="{Key}" text="{Value}"/>-->
+								<!--				</m:items>-->
+								<!--			</m:ComboBox>-->
+								<!--		</f:fields>-->
+								<!--	</f:FormElement>-->
+								<!--	<f:FormElement id="soeCB4FE" label="{i18n>category4}">-->
+								<!--		<f:fields>-->
+								<!--			<m:ComboBox loadItems="handleLoadSOE4Items" change="handleSOECB4Select" id="soeCB4" selectedKey="{edit>/ToCategory/results/3/Value}"-->
+								<!--				items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '04' }]}">-->
+								<!--				<m:items>-->
+								<!--					<core:ListItem key="{Key}" text="{Value}"/>-->
+								<!--				</m:items>-->
+								<!--			</m:ComboBox>-->
+								<!--		</f:fields>-->
+								<!--	</f:FormElement>-->
+								<!--	<f:FormElement id="soeCB5FE" label="{i18n>category5}">-->
+								<!--		<f:fields>-->
+								<!--			<m:ComboBox loadItems="handleLoadSOE5Items" change="handleSOECB5Select" id="soeCB5" selectedKey="{edit>/ToCategory/results/4/Value}"-->
+								<!--				items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '05' }]}">-->
+								<!--				<m:items>-->
+								<!--					<core:ListItem key="{Key}" text="{Value}"/>-->
+								<!--				</m:items>-->
+								<!--			</m:ComboBox>-->
+								<!--		</f:fields>-->
+								<!--	</f:FormElement>-->
+								<!--</f:formElements>-->
+							</f:FormContainer>
+							<!--<f:FormContainer title="Kalite">-->
+							<!--	<f:formElements>-->
+							<!--		<f:FormElement id="qSourceOfErrorFE" label="{i18n>sourceOfError}">-->
+							<!--			<f:fields>-->
+							<!--				<m:ComboBox id="qSourceOfError" change="handleSourceOfErrorSelect" selectedKey="{edit>/ToCustomerh/Zz1HKaynakKaliteSrh}"-->
+							<!--					items="{ path: 'valueHelp>/ValueHelpSet', filters: [{ path: 'Code', operator: 'EQ', value1: '0009' }]}">-->
+							<!--					<m:items>-->
+							<!--						<core:ListItem key="{valueHelp>Key}" text="{valueHelp>Value}"/>-->
+							<!--					</m:items>-->
+							<!--				</m:ComboBox>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--		<f:FormElement id="qualCB1FE" label="{i18n>category1}">-->
+							<!--			<f:fields>-->
+							<!--				<m:ComboBox change="handleQualCB1Select" id="qualCB1" selectedKey="{edit>/ToCustomerh/Zz1Kat1KaliteSrh}"-->
+							<!--					items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '01' }]}">-->
+							<!--					<m:items>-->
+							<!--						<core:ListItem key="{Key}" text="{Value}"/>-->
+							<!--					</m:items>-->
+							<!--				</m:ComboBox>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--		<f:FormElement id="qualCB2FE" label="{i18n>category2}">-->
+							<!--			<f:fields>-->
+							<!--				<m:ComboBox change="handleQualCB2Select" id="qualCB2" selectedKey="{edit>/ToCustomerh/Zz1Kat2KaliteSrh}"-->
+							<!--					items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '02' }]}">-->
+							<!--					<m:items>-->
+							<!--						<core:ListItem key="{Key}" text="{Value}"/>-->
+							<!--					</m:items>-->
+							<!--				</m:ComboBox>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--		<f:FormElement id="qualCB3FE" label="{i18n>category3}">-->
+							<!--			<f:fields>-->
+							<!--				<m:ComboBox change="handleQualCB3Select" id="qualCB3" selectedKey="{edit>/ToCustomerh/Zz1Kat3KaliteSrh}"-->
+							<!--					items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '03' }]}">-->
+							<!--					<m:items>-->
+							<!--						<core:ListItem key="{Key}" text="{Value}"/>-->
+							<!--					</m:items>-->
+							<!--				</m:ComboBox>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--		<f:FormElement id="qualCB4FE" label="{i18n>category4}">-->
+							<!--			<f:fields>-->
+							<!--				<m:ComboBox change="handleQualCB4Select" id="qualCB4" selectedKey="{edit>/ToCustomerh/Zz1Kat4KaliteSrh}"-->
+							<!--					items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '04' }]}">-->
+							<!--					<m:items>-->
+							<!--						<core:ListItem key="{Key}" text="{Value}"/>-->
+							<!--					</m:items>-->
+							<!--				</m:ComboBox>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--		<f:FormElement id="qualCB5FE" label="{i18n>category5}">-->
+							<!--			<f:fields>-->
+							<!--				<m:ComboBox change="handleQualCB5Select" id="qualCB5" selectedKey="{edit>/ToCustomerh/Zz1Kat5KaliteSrh}"-->
+							<!--					items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '05' }]}">-->
+							<!--					<m:items>-->
+							<!--						<core:ListItem key="{Key}" text="{Value}"/>-->
+							<!--					</m:items>-->
+							<!--				</m:ComboBox>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--	</f:formElements>-->
+							<!--</f:FormContainer>-->
+							<!--<f:FormContainer title="Teknik Destek/Garanti">-->
+							<!--	<f:formElements>-->
+							<!--		<f:FormElement id="gSourceOfErrorFE" label="{i18n>sourceOfError}">-->
+							<!--			<f:fields>-->
+							<!--				<m:ComboBox id="gSourceOfError" change="handleSourceOfErrorSelect" selectedKey="{edit>/ToCustomerh/Zz1HKaynakGarantiSrh}"-->
+							<!--					items="{ path: 'valueHelp>/ValueHelpSet', filters: [{ path: 'Code', operator: 'EQ', value1: '0009' }]}">-->
+							<!--					<m:items>-->
+							<!--						<core:ListItem key="{valueHelp>Key}" text="{valueHelp>Value}"/>-->
+							<!--					</m:items>-->
+							<!--				</m:ComboBox>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--		<f:FormElement id="grntCB1FE" label="{i18n>category1}">-->
+							<!--			<f:fields>-->
+							<!--				<m:ComboBox change="handleGrntCB1Select" id="grntCB1" selectedKey="{edit>/ToCustomerh/Zz1Kat1GarantiSrh}"-->
+							<!--					items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '01' }]}">-->
+							<!--					<m:items>-->
+							<!--						<core:ListItem key="{Key}" text="{Value}"/>-->
+							<!--					</m:items>-->
+							<!--				</m:ComboBox>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--		<f:FormElement id="grntCB2FE" label="{i18n>category2}">-->
+							<!--			<f:fields>-->
+							<!--				<m:ComboBox change="handleGrntCB2Select" id="grntCB2" selectedKey="{edit>/ToCustomerh/Zz1Kat2GarantiSrh}"-->
+							<!--					items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '02' }]}">-->
+							<!--					<m:items>-->
+							<!--						<core:ListItem key="{Key}" text="{Value}"/>-->
+							<!--					</m:items>-->
+							<!--				</m:ComboBox>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--		<f:FormElement id="grntCB3FE" label="{i18n>category3}">-->
+							<!--			<f:fields>-->
+							<!--				<m:ComboBox change="handleGrntCB3Select" id="grntCB3" selectedKey="{edit>/ToCustomerh/Zz1Kat3GarantiSrh}"-->
+							<!--					items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '03' }]}">-->
+							<!--					<m:items>-->
+							<!--						<core:ListItem key="{Key}" text="{Value}"/>-->
+							<!--					</m:items>-->
+							<!--				</m:ComboBox>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--		<f:FormElement id="grntCB4FE" label="{i18n>category4}">-->
+							<!--			<f:fields>-->
+							<!--				<m:ComboBox change="handleGrntCB4Select" id="grntCB4" selectedKey="{edit>/ToCustomerh/Zz1Kat4GarantiSrh}"-->
+							<!--					items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '04' }]}">-->
+							<!--					<m:items>-->
+							<!--						<core:ListItem key="{Key}" text="{Value}"/>-->
+							<!--					</m:items>-->
+							<!--				</m:ComboBox>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--		<f:FormElement id="grntCB5FE" label="{i18n>category5}">-->
+							<!--			<f:fields>-->
+							<!--				<m:ComboBox change="handleGrntCB5Select" id="grntCB5" selectedKey="{edit>/ToCustomerh/Zz1Kat5GarantiSrh}"-->
+							<!--					items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '05' }]}">-->
+							<!--					<m:items>-->
+							<!--						<core:ListItem key="{Key}" text="{Value}"/>-->
+							<!--					</m:items>-->
+							<!--				</m:ComboBox>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--	</f:formElements>-->
+							<!--</f:FormContainer>-->
+						</f:formContainers>
+					</f:Form>
+				</uxap:ObjectPageSubSection>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection id="histSections" title="{i18n>changeHist}" titleUppercase="false">
+				<uxap:ObjectPageSubSection>
+					<table:Table id="idHistoryTable" rows="{edit>/ToChangeHistory/results}" selectionMode="None" visibleRowCount="5" threshold="10">
+						<table:extension>
+							<m:Toolbar>
+								<m:content></m:content>
+							</m:Toolbar>
+						</table:extension>
+						<table:columns>
+							<table:Column sortProperty="Indtext" filterProperty="Indtext">
+								<table:menu>
+									<unified:Menu id="historyContextMenu">
+										<unified:items>
+											<unified:MenuItem text="Temizle" select="handleHistoryClearFilter" icon="sap-icon://clear-filter"/>
+											<unified:MenuItem text="Artan düzeyde sırala" select=".onHistoryOperationSort($event, 'asc')" icon="sap-icon://sort-ascending"/>
+											<unified:MenuItem text="Azalan düzeyde sırala" select=".onHistoryOperationSort($event, 'desc')" icon="sap-icon://sort-descending"/>
+										</unified:items>
+									</unified:Menu>
+								</table:menu>
+								<m:Label text="{i18n>operation}"/>
+								<table:template><m:Text text="{edit>Indtext}"/></table:template>
+							</table:Column>
+							<table:Column>
+								<m:Label text="{i18n>changeLevel}"/>
+								<table:template><m:Text text="{edit>Leveltxt}"/></table:template>
+							</table:Column>
+							<table:Column>
+								<m:Label text="{i18n>newValue}"/>
+								<table:template><m:Text text="{edit>FNew}"/></table:template>
+							</table:Column>
+							<table:Column>
+								<m:Label text="{i18n>oldValue}"/>
+								<table:template><m:Text text="{edit>FOld}"/></table:template>
+							</table:Column>
+							<table:Column>
+								<m:Label text="{i18n>changedBy}"/>
+								<table:template><m:Text text="{edit>Username}"/></table:template>
+							</table:Column>
+							<table:Column hAlign="End">
+								<m:Label text="{i18n>changedDate}"/>
+								<table:template><m:Text text="{path:'edit>Udate', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd.MM.yyyy' , UTC: true }}"/></table:template>
+							</table:Column>
+							<table:Column hAlign="End">
+								<m:Label text="{i18n>changedTime}"/>
+								<table:template><m:Text text="{ path:'edit>Utime', type: 'sap.ui.model.odata.type.Time', formatOptions: { pattern : 'HH:mm:ss' } }"/></table:template>
+							</table:Column>
+						</table:columns>
+					</table:Table>
+					<!--<m:Table items="{edit>/ToChangeHistory/results}">-->
+					<!--	<m:columns>-->
+					<!--		<m:Column>-->
+					<!--			<m:Text text="İşlem"/>-->
+					<!--		</m:Column>-->
+					<!--		<m:Column>-->
+					<!--			<m:Text text="Değişiklik düzeyi"/>-->
+					<!--		</m:Column>-->
+					<!--		<m:Column>-->
+					<!--			<m:Text text="Yeni Değer"/>-->
+					<!--		</m:Column>-->
+					<!--		<m:Column>-->
+					<!--			<m:Text text="Eski Değer"/>-->
+					<!--		</m:Column>-->
+					<!--		<m:Column>-->
+					<!--			<m:Text text="Değiştiren"/>-->
+					<!--		</m:Column>-->
+					<!--		<m:Column>-->
+					<!--			<m:Text text="Değişiklik Tarihi"/>-->
+					<!--		</m:Column>-->
+					<!--		<m:Column>-->
+					<!--			<m:Text text="Değişiklik Saati"/>-->
+					<!--		</m:Column>-->
+					<!--	</m:columns>-->
+					<!--	<m:items>-->
+					<!--		<m:ColumnListItem vAlign="Middle">-->
+					<!--			<m:cells>-->
+					<!--				<m:Text text="{edit>Indtext}"/>-->
+					<!--				<m:Text text="{edit>Leveltxt}"/>-->
+					<!--				<m:Text text="{edit>FNew}"/>-->
+					<!--				<m:Text text="{edit>FOld}"/>-->
+					<!--				<m:Text text="{edit>Username}"/>-->
+					<!--				<m:Text text="{path:'edit>Udate', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd.MM.yyyy'}}"/>-->
+					<!--				<m:Text text="{path:'edit>Utime', type: 'sap.ui.model.odata.type.Time', formatOptions: { pattern : 'HH:mm:ss' }}"/>-->
+					<!--			</m:cells>-->
+					<!--		</m:ColumnListItem>-->
+					<!--	</m:items>-->
+					<!--</m:Table>-->
+				</uxap:ObjectPageSubSection>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

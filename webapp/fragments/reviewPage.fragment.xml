@@ -1,0 +1,262 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:layout="sap.ui.layout"
+	xmlns:unified="sap.ui.unified" xmlns:table="sap.ui.table">
+	<Page id="wizardBranchingReviewPage" showHeader="false">
+		<content>
+			<Panel>
+				<headerToolbar>
+					<Toolbar height="3rem">
+						<Title text="{i18n>custInf}"/>
+						<ToolbarSpacer/>
+						<Button text="{i18n>buttonTextEdit}" press="_navBackToCustomer"/>
+					</Toolbar>
+				</headerToolbar>
+				<content>
+					<f:SimpleForm editable="false" layout="ResponsiveGridLayout" labelSpanXL="6" labelSpanL="6" labelSpanM="6" labelSpanS="12"
+						adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2"
+						singleContainerFullSize="false">
+						<f:content>
+							<core:Title text=""/>
+							<!--<Label text="{i18n>custNo}"/>-->
+							<!--<Text id="siparisVerenNameRew" />-->
+							<Label text="{i18n>custName}"/>
+							<Text id="customerReview"/>
+							<Label text="{i18n>custTel}"/>
+							<Text id="customerTelReview"/>
+							<core:Title text=""/>
+							<Label text="{i18n>custAddr}"/>
+							<VBox width="100%">
+								<TextArea id="customerAddressRewiew" rows="5" enabled="false"/>
+								<HBox>
+									<Button icon="sap-icon://edit"/>
+								</HBox>
+							</VBox>
+						</f:content>
+					</f:SimpleForm>
+				</content>
+			</Panel>
+			<Panel>
+				<headerToolbar>
+					<Toolbar height="3rem">
+						<Title text="{i18n>itemTitle}"/>
+						<ToolbarSpacer/>
+						<Button text="{i18n>buttonTextEdit}" press="_navBackToItems"/>
+					</Toolbar>
+				</headerToolbar>
+				<content>
+					<table:Table class="sapUiTinyMarginBottom" rows="{ path: 'create>/ToSpItems/results'}" selectionMode="None"
+						visibleRowCount="10" editable="false">
+						<table:extension>
+							<OverflowToolbar style="Clear">
+								<Title text="Yedek Parça"/>
+							</OverflowToolbar>
+						</table:extension>
+						<table:columns>
+							<table:Column hAlign="Center">
+								<Label text="{i18n>itemNo}"/>
+								<table:template>
+									<Text text="{= parseInt(${path: 'create>NumberInt'})}"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="10rem" hAlign="Center">
+								<Label text="{i18n>orderProd}"/>
+								<table:template>
+									<Text text="{path: 'create>OrderedProd'}"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="5rem" hAlign="Center">
+								<Label text="{i18n>quan}"/>
+								<table:template>
+									<Text text="{path: 'create>Quantity'}"/>
+								</table:template>
+							</table:Column>
+							<table:Column hAlign="Center">
+								<Label text="{i18n>curr}"/>
+								<table:template>
+									<Text text="{path: 'create>ProcessQtyUnit'}"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="10rem" hAlign="Center">
+								<Label text="{i18n>prod}"/>
+								<table:template>
+									<Text text="{path: 'create>Description'}"/>
+								</table:template>
+							</table:Column>
+							<table:Column hAlign="Center">
+								<Label text="{i18n>acInd}"/>
+								<table:template>
+									<Switch enabled="false" change="ItemAcIndicatorChange" state="{path:'create>AcIndicator', formatter:'.acIndFormatter'}"
+										customTextOn="{i18n>yes}" customTextOff="{i18n>no}"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="8rem" hAlign="Center">
+								<Label text="{i18n>itemType}"/>
+								<table:template>
+									<Text text="{path: 'create>ItemTypeDescr'}"/>
+								</table:template>
+							</table:Column>
+							<table:Column hAlign="Center">
+								<Label text="{i18n>netValue}"/>
+								<table:template>
+									<Text text="{path: 'create>NetValue'}"/>
+								</table:template>
+							</table:Column>
+							<table:Column hAlign="Center">
+								<Label text="{i18n>orderNo}"/>
+								<table:template>
+									<Text text="{path: 'create>DocObj'}"/>
+								</table:template>
+							</table:Column>
+							<table:Column hAlign="Center">
+								<Label text="{i18n>orderDate}"/>
+								<table:template>
+									<Text text="{path: 'create>DocCreateDate'}"/>
+								</table:template>
+							</table:Column>
+							<table:Column hAlign="Center">
+								<Label text="{i18n>orderEndDate}"/>
+								<table:template>
+									<Text text="{path: 'create>DocEndDate'}"/>
+								</table:template>
+							</table:Column>
+							<table:Column hAlign="Center">
+								<Label text="{i18n>curr}"/>
+								<table:template>
+									<Text text="{path: 'create>Currency'}"/>
+								</table:template>
+							</table:Column>
+							<table:Column hAlign="Center">
+								<Label text="{i18n>status}"/>
+								<table:template>
+									<Text text="{path: 'create>Statustxt'}"/>
+								</table:template>
+							</table:Column>
+						</table:columns>
+					</table:Table>
+				</content>
+			</Panel>
+			<Panel>
+				<headerToolbar>
+					<Toolbar height="3rem">
+						<Title text="{i18n>generalInf}"/>
+						<ToolbarSpacer/>
+						<Button text="{i18n>buttonTextEdit}" press="_navBackToGeneral"/>
+					</Toolbar>
+				</headerToolbar>
+				<content>
+					<f:SimpleForm editable="false" layout="ResponsiveGridLayout" labelSpanXL="6" labelSpanL="6" labelSpanM="6" labelSpanS="12"
+						adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2"
+						singleContainerFullSize="false">
+						<f:content>
+							<core:Title text=""/>
+							<!--<Label text="{i18n>orderNo}"/>-->
+							<!--<Input liveChange="handleGeneralStepValidation" enabled="false" value="{create>/ToRefObj/}"/>-->
+							<!--<Button icon="sap-icon://search" text="{i18>findOrder}" press="handleFindOrderPress"/>-->
+							<Label text="{i18n>product}"/>
+							<Text text="{create>/ToRefObj/TextObject}"/>
+							<Text text="{create>/ToRefObj/ProductId}"/>
+							<core:Title text=""/>
+							<Label text="{i18n>billNo}"/>
+							<Text text="{create>/ToCustomerh/Zz1FaturaNoSrh}"/>
+							<Label text="{i18n>billDate}"/>
+							<DatePicker enabled="false" dateValue="{path:'create>/ToCustomerh/Zz1FaturaTarihSrh', formatter:'.faturaTarihFormatter'}"/>
+							<!--<Label text="{i18n>guaranteed}"/>-->
+							<!--<Switch change="acIndicatorChange" enabled="false" state="{path:'create>/ToPricing/AcIndicator', formatter:'.acIndFormatter'}" customTextOn="{i18n>yes}"-->
+							<!--	customTextOff="{i18n>no}"/>-->
+						</f:content>
+					</f:SimpleForm>
+				</content>
+			</Panel>
+			<Panel>
+				<headerToolbar>
+					<Toolbar height="3rem">
+						<Title text="{i18n>titleNotes}"/>
+						<ToolbarSpacer/>
+						<!--<Button text="{i18n>buttonTextEdit}" press="_navBackToNotes"/>-->
+					</Toolbar>
+				</headerToolbar>
+				<content>
+					<List items="{create>/ToTexts/results}" delete="onRemoveNote" class="sapUiSmallMarginBottom">
+						<items>
+							<FeedListItem showIcon="true" icon="sap-icon://notes" sender="{detail>Tdtext}" text="{create>ConcLines}" info="{path: 'create>Tdtext'}"/>
+						</items>
+					</List>
+				</content>
+			</Panel>
+			<Panel>
+				<headerToolbar>
+					<Toolbar height="3rem">
+						<Title text="{i18n>errorHeader}"/>
+						<ToolbarSpacer/>
+						<Button text="{i18n>buttonTextEdit}" press="_navBackToError"/>
+					</Toolbar>
+				</headerToolbar>
+				<content>
+					<f:Form width="100%">
+						<f:layout>
+							<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4"
+								emptySpanM="4" emptySpanS="4" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="true"/>
+						</f:layout>
+						<f:formContainers>
+							<f:FormContainer>
+								<f:formElements>
+									<f:FormElement label="{i18n>sourceOfError}">
+										<f:fields>
+											<Text text="{create>/ToCustomerh/Zz1HKaynagiSdSrhTxt}"/>
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement label="{i18n>category1}">
+										<f:fields>
+											<Text text="{create>/ToCategory/results/0/Value}"/>
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement label="{i18n>category2}">
+										<f:fields>
+											<Text text="{create>/ToCategory/results/1/Value}"/>
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement label="{i18n>category3}">
+										<f:fields>
+											<Text text="{create>/ToCategory/results/2/Value}"/>
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement label="{i18n>category4}">
+										<f:fields>
+											<Text text="{create>/ToCategory/results/3/Value}"/>
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement label="{i18n>category5}">
+										<f:fields>
+											<Text text="{create>/ToCategory/results/4/Value}"/>
+										</f:fields>
+									</f:FormElement>
+								</f:formElements>
+							</f:FormContainer>
+						</f:formContainers>
+					</f:Form>
+					<!--<f:SimpleForm editable="false" layout="ResponsiveGridLayout" labelSpanXL="6" labelSpanL="6" labelSpanM="6" labelSpanS="12"-->
+					<!--	adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2"-->
+					<!--	singleContainerFullSize="false">-->
+					<!--	<f:content>-->
+					<!--		<core:Title text=""/>-->
+					<!--		<Label text="{i18n>product}"/>-->
+					<!--		<Text text="{create>/ToRefObj/TextObject}"/>-->
+					<!--		<Text text="{create>/ToRefObj/ProductId}"/>-->
+					<!--		<Label text="{i18n>billNo}"/>-->
+					<!--		<Text text="{create>/ToCustomerh/Zz1FaturaNoSrh}"/>-->
+					<!--		<Label text="{i18n>billDate}"/>-->
+					<!--		<DatePicker enabled="false" dateValue="{path:'create>/ToCustomerh/Zz1FaturaTarihSrh', formatter:'.faturaTarihFormatter'}"/>-->
+					<!--	</f:content>-->
+					<!--</f:SimpleForm>-->
+				</content>
+			</Panel>
+		</content>
+		<footer>
+			<Bar>
+				<contentRight>
+					<Button text="{i18n>buttonTextSave}" type="Accept" press="onSaveObject"></Button>
+					<Button text="{i18n>buttonTextCancel}" press="handleWizardCancel"></Button>
+				</contentRight>
+			</Bar>
+		</footer>
+	</Page>
+</core:FragmentDefinition>

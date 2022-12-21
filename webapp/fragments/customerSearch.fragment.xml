@@ -1,0 +1,105 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:filterbar="sap.ui.comp.filterbar">
+	<Dialog >
+		<customHeader>
+			<Bar>
+				<contentMiddle>
+					<Title text="{i18n>titleSearchCust}" id="idFragmentTitle"/>
+				</contentMiddle>
+				<contentRight>
+					<Button id="idcustomerSearchFra" icon="sap-icon://add" press="onShowNewCustTypeSelection" visible="true"/>
+				</contentRight>
+			</Bar>
+		</customHeader>
+		<content>
+			<filterbar:FilterBar showFilterConfiguration="false" useToolbar="false" showGoOnFB="true" search="handleCustomerSearch">
+				<filterbar:filterItems>
+					<filterbar:FilterItem label="{i18n>labelNameF}" name="nameSearchCustFbItem1">
+						<filterbar:control>
+							<SearchField id="idSearchCustFbControl1" showSearchButton="false" search="handleCustomerSearch"/>
+						</filterbar:control>
+					</filterbar:FilterItem>
+					<filterbar:FilterItem label="{i18n>labelNameL}" name="nameSearchCustFbItem2">
+						<filterbar:control>
+							<SearchField id="idSearchCustFbControl2" showSearchButton="false" search="handleCustomerSearch"/>
+						</filterbar:control>
+					</filterbar:FilterItem>
+					<filterbar:FilterItem label="{i18n>labelCustNo}" name="nameSearchCustFbItem3">
+						<filterbar:control>
+							<SearchField id="idSearchCustFbControl3" showSearchButton="false" search="handleCustomerSearch"/>
+						</filterbar:control>
+					</filterbar:FilterItem>
+					<filterbar:FilterItem label="{i18n>labelTel}" name="nameSearchCustFbItem4">
+						<filterbar:control>
+							<SearchField id="idSearchCustFbControl4" placeholder="5*********" showSearchButton="false" search="handleCustomerSearch"/>
+						</filterbar:control>
+					</filterbar:FilterItem>
+					<!--<filterbar:FilterItem label="{i18n>labelTcknTaxNum}" name="nameSearchCustFbItem5">-->
+					<!--	<filterbar:control>-->
+					<!--		<SearchField id="idSearchCustFbControl5" showSearchButton="false" search="handleCustomerSearch"/>-->
+					<!--	</filterbar:control>-->
+					<!--</filterbar:FilterItem>-->
+				</filterbar:filterItems>
+			</filterbar:FilterBar>
+			<Table noDataText=" " items="{ path: 'customerModel>/SearchSoldToSet' }" mode="MultiSelect" growing="true" width="100%">
+				<headerToolbar>
+					<OverflowToolbar>
+						<content>
+							<ToolbarSpacer/>
+							<Label text="Max Rows"/>
+							<Input width="5rem" id="custMaxRows" value="100"/>
+						</content>
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column width="12em">
+						<Text text="Tanıtıcı"/>
+					</Column>
+					<Column width="12em">
+						<Text text="Ad"/>
+					</Column>
+					<Column width="12em">
+						<Text text="Telefon"/>
+					</Column>
+					<Column width="12em">
+						<Text text="Sokak"/>
+					</Column>
+					<Column width="12em">
+						<Text text="Yerleşim Yeri"/>
+					</Column>
+					<Column width="12em">
+						<Text text="Bölge"/>
+					</Column>
+					<Column width="12em">
+						<Text text="Ülke"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem  type="Active"
+						press="handleCustomerListItemPress">
+						<cells>
+							<Text text="{customerModel>Partner}"/>
+							<Text text="{customerModel>AccountName}"/>
+							<Text text="{customerModel>Telephonemob}"/>
+							<Text text="{customerModel>Street}"/>
+							<Text text="{customerModel>RegionText}"/>
+							<Text text="{customerModel>City}"/>
+							<Text text="{customerModel>CountryText}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			<!--<List noDataText=" " items="{ path: 'customerModel>/SearchSoldToSet' }" mode="MultiSelect" growing=" true" width="100%">-->
+			<!--	<items>-->
+			<!--		<StandardListItem title="{customerModel>Partner}" description="{customerModel>McName1} {customerModel>McName2}" type="Active"-->
+			<!--			press="handleCustomerListItemPress"/>-->
+			<!--	</items>-->
+			<!--</List>-->
+		</content>
+		<beginButton>
+			<Button text="{i18n>buttonTextSelect}" press="handleCustomerSelect"></Button>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>buttonTextCancel}" press="handleCustomerCancel"></Button>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

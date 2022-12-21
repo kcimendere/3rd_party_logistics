@@ -1,0 +1,297 @@
+<mvc:View controllerName="crm.third_party_lgst.controller.ObjectCreate" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+	xmlns:u="sap.ui.unified" xmlns:f="sap.ui.layout.form" xmlns:layout="sap.ui.layout" xmlns:upload="sap.m.upload" xmlns:table="sap.ui.table" 
+	xmlns:html="http://www.w3.org/1999/xhtml" xmlns:v="sap.ui.comp.variants">
+	<NavContainer id="wizardNavContainer">
+		<pages>
+			<Page id="wizardContentPage">
+				<Wizard id="wizard" class="sapUiResponsivePadding--header sapUiResponsivePadding--content" complete="wizardCompletedHandler">
+					<WizardStep id="customerSelectionStep" title="{i18n>custInf}" validated="false" complete="handleCustomerStepComplete">
+						<f:Form width="100%">
+							<f:layout>
+								<f:ResponsiveGridLayout labelSpanXL="6" labelSpanL="6" labelSpanM="6" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+									emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="true"/>
+							</f:layout>
+							<f:formContainers>
+								<f:FormContainer>
+									<f:formElements>
+										<f:FormElement label="{i18n>custName}">
+											<f:fields>
+												<Input required="true" liveChange="handleCustomerStepValidation" id="customer" valueHelpOnly="true" showValueHelp="true"
+													valueHelpRequest="handleCustomerHelp"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="{i18n>custTel}">
+											<f:fields>
+												<Input enabled="false" id="customerTel"/>
+											</f:fields>
+										</f:FormElement>
+										<!--<f:FormElement label="{i18n>owner}">-->
+										<!--	<f:fields>-->
+										<!--		<Input required="true" liveChange="handleCustomerStepValidation" id="ownerName" valueHelpOnly="true" showValueHelp="true"-->
+										<!--			valueHelpRequest="handleCustomerHelp"/>-->
+										<!--	</f:fields>-->
+										<!--</f:FormElement>-->
+									</f:formElements>
+								</f:FormContainer>
+								<f:FormContainer>
+									<f:formElements>
+										<f:FormElement label="{i18n>custAddr}">
+											<f:fields>
+												<TextArea id="customerAddress" rows="5" enabled="false"/>
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+							</f:formContainers>
+						</f:Form>
+					</WizardStep>
+					<WizardStep id="generalInfoStep" title="{i18n>generalInf}" validated="false" complete="handleGeneralStepComplete">
+						<f:Form width="100%">
+							<f:layout>
+								<f:ResponsiveGridLayout labelSpanXL="6" labelSpanL="6" labelSpanM="6" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+									emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="true"/>
+							</f:layout>
+							<f:formContainers>
+								<f:FormContainer>
+									<f:formElements>
+										<f:FormElement label="{i18n>orderNo}">
+											<f:fields>
+												<Button icon="sap-icon://search" text="{i18>findOrder}" press="handleFindOrderPress"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="{i18n>product}">
+											<f:fields>
+												<Input liveChange="handleGeneralStepValidation" enabled="false" value="{create>/ToRefObj/TextObject}"/>
+												<Input id="productId" required="true" liveChange="handleGeneralStepValidation" valueHelpOnly="true" showValueHelp="true"
+													valueHelpRequest="handleProductHelp" value="{create>/ToRefObj/ProductId}"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="{i18n>billNo}">
+											<f:fields>
+												<Input id="billNo" maxLength="10" required="true" liveChange="handleGeneralStepValidation" value="{create>/ToCustomerh/Zz1FaturaNoSrh}"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="{i18n>billDate}">
+											<f:fields>
+												<DatePicker id="billDate" required="true" change="handleInvoiceDateChanged"
+													dateValue="{path:'create>/ToCustomerh/Zz1FaturaTarihSrh', formatter:'.faturaTarihFormatter'}"/>
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+								<f:FormContainer>
+									<f:FormElement label="{i18n>custReq}">
+										<f:fields>
+											<TextArea liveChange="handleGeneralStepValidation" required="true" id="custReq" rows="5"/>
+										</f:fields>
+									</f:FormElement>
+									<!--<f:FormElement label="Müşteriden Ürün Fotoğrafı">-->
+									<!--	<f:fields>-->
+									<!--		<u:FileUploader required="true" useMultipart="false" width="100%" fileType="JPG,JPEG,jpeg,jpg,PNG,png,pdf,PDF,xls,xlsx,csv" id="fileUploaderMus"-->
+									<!--			name="myFileUpload" tooltip="Fatura fotoğrafı yükle" uploadStart="handleUploadStart" uploadComplete="handleImageUploadCompleteMus"/>-->
+									<!--		<Button text="Yükle" press="handleUploadAttachmentMus" width="100%">-->
+									<!--			<layoutData>-->
+									<!--				<layout:GridData span="XL2 L2 M2 S2"/>-->
+									<!--			</layoutData>-->
+									<!--		</Button>-->
+									<!--	</f:fields>-->
+									<!--</f:FormElement>-->
+									<f:FormElement label="Fatura Fotoğrafı">
+										<f:fields>
+											<u:FileUploader required="true" useMultipart="false" width="100%" fileType="JPG,JPEG,jpeg,jpg,PNG,png,pdf,PDF,xls,xlsx,csv" id="fileUploader" name="myFileUpload"
+												tooltip="Fatura fotoğrafı yükle" uploadStart="handleUploadStart" uploadComplete="handleImageUploadComplete"/>
+											<Button text="Yükle" press="handleUploadAttachment" width="100%">
+												<layoutData>
+													<layout:GridData span="XL2 L2 M2 S2"/>
+												</layoutData>
+											</Button>
+										</f:fields>
+									</f:FormElement>
+								</f:FormContainer>
+							</f:formContainers>
+						</f:Form>
+					</WizardStep>
+					<WizardStep id="itemStep" title="{i18n>itemTitle}" validated="true" complete="handleItemStepComplete">
+						<table:Table class="sapUiTinyMarginBottom" id="idSpItemTable" rows="{ path: 'create>/ToSpItems/results'}" selectionMode="None"
+							visibleRowCount="10" editable="false">
+							<table:extension>
+								<OverflowToolbar style="Clear">
+									<Title text="Yedek Parça"/>
+									<ToolbarSpacer/>
+									<Button text="Ürün Önerisi" press="handleYedekParEkle"/>
+								</OverflowToolbar>
+							</table:extension>
+							<table:columns>
+								<table:Column width="5rem" id="deleteButtonFE" hAlign="Center">
+									<Label text="{i18n>transition}"/>
+									<table:template>
+										<Button id="deleteButton" tooltip="Sil" icon="sap-icon://delete" press="handleItemDelete"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center">
+									<Label text="{i18n>itemNo}"/>
+									<table:template>
+										<Text text="{= parseInt(${path: 'create>NumberInt'})}"/>
+									</table:template>
+								</table:Column>
+								<table:Column width="10rem" hAlign="Center">
+									<Label text="{i18n>orderProd}"/>
+									<table:template>
+										<Text text="{path: 'create>OrderedProd'}"/>
+									</table:template>
+								</table:Column>
+								<table:Column id="spQuantityCol" width="5rem" hAlign="Center">
+									<Label text="{i18n>quan}"/>
+									<table:template>
+										<Text id="spQuantity" text="{path: 'create>Quantity'}"/>
+									</table:template>
+								</table:Column>
+								<!--<table:Column hAlign="Center">-->
+								<!--	<Label text="{i18n>curr}"/>-->
+								<!--	<table:template>-->
+								<!--		<Text text="{path: 'create>ProcessQtyUnit'}"/>-->
+								<!--	</table:template>-->
+								<!--</table:Column>-->
+								<table:Column width="10rem" hAlign="Center">
+									<Label text="{i18n>prod}"/>
+									<table:template>
+										<Text text="{path: 'create>Description'}"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center" id="acIndSPCol">
+									<Label text="{i18n>acInd}"/>
+									<table:template>
+										<Switch id="acIndSP" enabled="false" change="ItemAcIndicatorChange" state="{path:'create>AcIndicator', formatter:'.acIndFormatter'}"
+											customTextOn="{i18n>yes}" customTextOff="{i18n>no}"/>
+									</table:template>
+								</table:Column>
+								<table:Column width="8rem" hAlign="Center">
+									<Label text="{i18n>itemType}"/>
+									<table:template>
+										<Text text="{path: 'create>ItemTypeDescr'}"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center">
+									<Label text="{i18n>netValue}"/>
+									<table:template>
+										<Text text="{path: 'create>NetValue'}"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center">
+									<Label text="{i18n>orderNo}"/>
+									<table:template>
+										<Text text="{path: 'create>DocObj'}"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center">
+									<Label text="{i18n>orderDate}"/>
+									<table:template>
+										<Text text="{path: 'create>DocCreateDate'}"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center">
+									<Label text="{i18n>orderEndDate}"/>
+									<table:template>
+										<Text text="{path: 'create>DocEndDate'}"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center">
+									<Label text="{i18n>curr}"/>
+									<table:template>
+										<Text text="{path: 'create>Currency'}"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center">
+									<Label text="{i18n>status}"/>
+									<table:template>
+										<Text text="{path: 'create>Statustxt'}"/>
+									</table:template>
+								</table:Column>
+							</table:columns>
+						</table:Table>
+					</WizardStep>
+					<WizardStep id="errorStep" title="{i18n>errorHeader}" validated="false" complete="handleErrorStepComplete">
+						<f:Form width="100%">
+							<f:layout>
+								<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4"
+									emptySpanM="4" emptySpanS="4" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="true"/>
+							</f:layout>
+							<f:formContainers>
+								<f:FormContainer>
+									<f:formElements>
+										<f:FormElement label="{i18n>sourceOfError}">
+											<f:fields>
+												<ComboBox required="true" id="sourceOfError" change="handleSourceOfErrorSelect" selectedKey="{create>/ToCustomerh/Zz1HKaynagiSdSrh}"
+													items="{ path: 'valueHelp>/ValueHelpSet', filters: [{ path: 'Code', operator: 'EQ', value1: '0009' }]}">
+													<items>
+														<core:ListItem key="{valueHelp>Key}" text="{valueHelp>Value}" additionalText="{valueHelp>Key}"/>
+													</items>
+												</ComboBox>
+												<!--<Input value="{create>/ToCustomerh/Zz1HKaynagiSdSrhTxt}"/>-->
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="{i18n>category1}">
+											<f:fields>
+												<ComboBox required="true" loadItems="handleLoadSOE1Items" change="handleSOECB1Select" id="soeCB1" selectedKey="{create>/ToCategory/results/0/Key}"
+													items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '01' }]}">
+													<items>
+														<core:ListItem key="{Key}" additionalText="{Key}" text="{Value}"/>
+													</items>
+												</ComboBox>
+												<!--<Input value="{create>/ToCategory/results/0/Value}"/>-->
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="{i18n>category2}">
+											<f:fields>
+												<ComboBox required="true" loadItems="handleLoadSOE2Items" change="handleSOECB2Select" id="soeCB2" selectedKey="{create>/ToCategory/results/1/Key}"
+													items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '02' }]}">
+													<items>
+														<core:ListItem key="{Key}" additionalText="{Key}" text="{Value}"/>
+													</items>
+												</ComboBox>
+												<!--<Input value="{create>/ToCategory/results/1/Value}"/>-->
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="{i18n>category3}">
+											<f:fields>
+												<ComboBox required="true" loadItems="handleLoadSOE3Items" change="handleSOECB3Select" id="soeCB3" selectedKey="{create>/ToCategory/results/2/Key}"
+													items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '03' }]}">
+													<items>
+														<core:ListItem key="{Key}" additionalText="{Key}" text="{Value}"/>
+													</items>
+												</ComboBox>
+												<!--<Input value="{create>/ToCategory/results/2/Value}"/>-->
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="{i18n>category4}">
+											<f:fields>
+												<ComboBox required="true" loadItems="handleLoadSOE4Items" change="handleSOECB4Select" id="soeCB4" selectedKey="{create>/ToCategory/results/3/Key}"
+													items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '04' }]}">
+													<items>
+														<core:ListItem key="{Key}" additionalText="{Key}" text="{Value}"/>
+													</items>
+												</ComboBox>
+												<!--<Input va="{create>/ToCategory/results/3/Value}"/>-->
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="{i18n>category5}">
+											<f:fields>
+												<ComboBox required="true" loadItems="handleLoadSOE5Items" change="handleSOECB5Select" id="soeCB5" selectedKey="{create>/ToCategory/results/4/Key}"
+													items="{ path: '/CategorySet', filters: [{ path: 'Level', operator: 'EQ', value1: '05' }]}">
+													<items>
+														<core:ListItem key="{Key}" additionalText="{Key}" text="{Value}"/>
+													</items>
+												</ComboBox>
+												<!--<Input va="{create>/ToCategory/results/4/Value}"/>-->
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+							</f:formContainers>
+						</f:Form>
+					</WizardStep>
+				</Wizard>
+			</Page>
+		</pages>
+	</NavContainer>
+</mvc:View>

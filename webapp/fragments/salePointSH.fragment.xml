@@ -1,0 +1,43 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:filterbar="sap.ui.comp.filterbar">
+	<Dialog >
+		<customHeader>
+			<Bar>
+				<contentMiddle>
+					<Title text="{i18n>salePoint}" />
+				</contentMiddle>
+			</Bar>
+		</customHeader>
+		<content>
+			<Table noDataText=" " items="{ path: 'valueHelp>/HT001wSet'}" growing="true" width="100%">
+				<headerToolbar>
+				</headerToolbar>
+				<columns>
+					<Column width="12em">
+						<Text text="Satış Noktası Tanıtıcı"/>
+					</Column>
+					<Column width="12em">
+						<Text text="Satış Noktası Açıklaması"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem  type="Active"
+						press="handleSalePointListItemPress">
+						<cells>
+							<Text text="{valueHelp>Werks}"/>
+							<Text text="{valueHelp>Name1}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			<!--<List noDataText=" " items="{ path: 'customerModel>/SearchSoldToSet' }" mode="MultiSelect" growing=" true" width="100%">-->
+			<!--	<items>-->
+			<!--		<StandardListItem title="{customerModel>Partner}" description="{customerModel>McName1} {customerModel>McName2}" type="Active"-->
+			<!--			press="handleCustomerListItemPress"/>-->
+			<!--	</items>-->
+			<!--</List>-->
+		</content>
+		<endButton>
+			<Button text="{i18n>buttonTextCancel}" press="handleSalePointCancel"></Button>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

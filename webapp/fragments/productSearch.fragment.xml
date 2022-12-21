@@ -1,0 +1,129 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:filterbar="sap.ui.comp.filterbar">
+	<Dialog>
+		<customHeader>
+			<Bar>
+				<contentMiddle>
+					<Title text="Ürün Arama" id="idProductFragmentTitle"/>
+				</contentMiddle>
+			</Bar>
+		</customHeader>
+		<content>
+			<filterbar:FilterBar showFilterConfiguration="false" useToolbar="false" showGoOnFB="true" search="handleProductSearch">
+				<filterbar:filterItems>
+					<filterbar:FilterItem label="Malzeme" name="nameSearchProdFbItem1">
+						<filterbar:control>
+							<SearchField id="idSearchProdFbControl1" showSearchButton="false" search="handleProductSearch"/>
+						</filterbar:control>
+					</filterbar:FilterItem>
+					<filterbar:FilterItem label="Ürün Tanımı" name="nameSearchProdFbItem2">
+						<filterbar:control>
+							<SearchField id="idSearchProdFbControl2" showSearchButton="false" search="handleProductSearch"/>
+						</filterbar:control>
+					</filterbar:FilterItem>
+					<filterbar:FilterItem label="Malzeme Türü" name="nameSearchProdFbItem3">
+						<filterbar:control>
+							<MultiComboBox id="idSearchProdFbControl3" items="{ path: 'valueHelp>/ValueHelpSet', filters: [{ path: 'Code', operator: 'EQ', value1: '0008' }]}">
+								<items>
+									<core:ListItem key="{valueHelp>Key}" text="{valueHelp>Value}"/>
+								</items>
+							</MultiComboBox>
+							<!--<MultiInput submit="handleProductSearch" id="materialTypeInp" showValueHelp="true" valueHelpOnly="true" width="100%"-->
+							<!--	valueHelpRequest="onShowMaterialTypeSH"/>-->
+							<!--<SearchField id="idSearchProdFbControl3" showSearchButton="false" search="handleProductSearch"/>-->
+						</filterbar:control>
+					</filterbar:FilterItem>
+					<filterbar:FilterItem label="Eski Malzeme No" name="nameSearchProdFbItem4">
+						<filterbar:control>
+							<SearchField id="idSearchProdFbControl4" showSearchButton="false" search="handleProductSearch"/>
+						</filterbar:control>
+					</filterbar:FilterItem>
+					<!--<filterbar:FilterItem label="Ürün Hyrş." name="nameSearchProdFbItem4">-->
+					<!--	<filterbar:control>-->
+					<!--		<SearchField id="idSearchProdFbControl4" showSearchButton="false" search="handleProductSearch"/>-->
+					<!--	</filterbar:control>-->
+					<!--</filterbar:FilterItem>-->
+					<!--<filterbar:FilterItem label="Ürün Türü Grubu" name="nameSearchProdFbItem5">-->
+					<!--	<filterbar:control>-->
+					<!--		<SearchField id="idSearchProdFbControl5" showSearchButton="false" search="handleProductSearch"/>-->
+					<!--	</filterbar:control>-->
+					<!--</filterbar:FilterItem>-->
+				</filterbar:filterItems>
+			</filterbar:FilterBar>
+			<Table noDataText=" " items="{ path: 'productModel>/SearchProdSet' }" mode="MultiSelect" growing="true" width="100%">
+				<headerToolbar>
+					<OverflowToolbar>
+						<content>
+							<ToolbarSpacer/>
+							<Label text="Max Rows"/>
+							<Input width="5rem" id="prodMaxRows" value="100"/>
+						</content>
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column width="12em">
+						<Text text="Malzeme"/>
+					</Column>
+					<Column width="12em">
+						<Text text="Ürün Tanımı"/>
+					</Column>
+					<Column width="12em">
+						<Text text="Ürün Tipi"/>
+					</Column>
+					<Column width="12em">
+						<Text text="Kategori Tanımı"/>
+					</Column>
+					<!--<Column width="12em">-->
+					<!--	<Text text="Malzeme Türü"/>-->
+					<!--</Column>-->
+					<!--<Column width="12em">-->
+					<!--	<Text text="Bölüm"/>-->
+					<!--</Column>-->
+					<!--<Column width="12em">-->
+					<!--	<Text text="Tanım"/>-->
+					<!--</Column>-->
+					<!--<Column width="12em">-->
+					<!--	<Text text="Kalem Tip Grubu"/>-->
+					<!--</Column>-->
+					<!--<Column width="12em">-->
+					<!--	<Text text="Tanım"/>-->
+					<!--</Column>-->
+					<!--<Column width="12em">-->
+					<!--	<Text text="Tanım"/>-->
+					<!--</Column>-->
+					<!--<Column width="12em">-->
+					<!--	<Text text="Tanım"/>-->
+					<!--</Column>-->
+				</columns>
+				<items>
+					<ColumnListItem type="Active" press="handleProductListItemPress">
+						<cells>
+							<Text text="{productModel>ProductId}"/>
+							<Text text="{productModel>ShortText}"/>
+							<Text text="{productModel>ProductTypeDesc}"/>
+							<Text text="{productModel>MaterialTypeDesc}"/>
+							<!--<Text text="{productModel>ProductHierarchyDesc}"/>-->
+							<!--<Text text="{productModel>Division}"/>-->
+							<!--<Text text="{productModel>ShortText}"/>-->
+							<!--<Text text="{productModel>ItemCatGroup}"/>-->
+							<!--<Text text="{productModel>IsMarkedForDeletion}"/>-->
+							<!--<Text text="{productModel>SalesStatusDescription}"/>-->
+							<!--<Text text="{productModel>SalesStatusValidDate}"/>-->
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			<!--<List noDataText=" " items="{ path: 'productModel>/SearchProdSet' }" mode="MultiSelect" growing=" true" width="100%">-->
+			<!--	<items>-->
+			<!--		<StandardListItem title="{productModel>ProductId}" description="{productModel>Zz1MalzemeTanimPrd}" type="Active"-->
+			<!--			press="handleProductListItemPress"/>-->
+			<!--	</items>-->
+			<!--</List>-->
+		</content>
+		<beginButton>
+			<Button text="{i18n>buttonTextSelect}" press="handleProductSelect"></Button>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>buttonTextCancel}" press="handleProductCancel"></Button>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

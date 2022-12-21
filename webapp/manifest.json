@@ -1,0 +1,204 @@
+{
+	"_version": "1.12.0",
+	"sap.app": {
+		"id": "crm.third_party_lgst",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"sourceTemplate": {
+			"id": "servicecatalog.connectivityComponentForManifest",
+			"version": "0.0.0"
+		},
+		"dataSources": {
+			"ZCM_SERVICEORDER_SRV": {
+				"uri": "/sap/opu/odata/sap/ZCM_SERVICEORDER_SRV/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/metadata.xml"
+				}
+			},
+			"ZCM_PRODUCT_SRV": {
+				"uri": "/sap/opu/odata/sap/ZCM_PRODUCT_SRV/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/ZCM_PRODUCT_SRV/metadata.xml"
+				}
+			},
+			"ZCM_PARTNER_SRV": {
+				"uri": "/sap/opu/odata/sap/ZCM_PARTNER_SRV/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/ZCM_PARTNER_SRV/metadata.xml"
+				}
+			},
+			"ZCM_VALUEHELPS_SRV": {
+				"uri": "/sap/opu/odata/sap/ZCM_VALUEHELPS_SRV/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/ZCM_VALUEHELPS_SRV/metadata.xml"
+				}
+			},
+			"ZCM_USER_SRV": {
+				"uri": "/sap/opu/odata/sap/ZCM_USER_SRV/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/ZCM_USER_SRV/metadata.xml"
+				}
+			}
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+	"sap.ui5": {
+		"flexEnabled": false,
+		"rootView": {
+			"viewName": "crm.third_party_lgst.view.App",
+			"type": "XML",
+			"async": true,
+			"id": "App"
+		},
+		"dependencies": {
+			"minUI5Version": "1.65.6",
+			"libs": {
+				"sap.ui.layout": {},
+				"sap.ui.core": {},
+				"sap.m": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "crm.third_party_lgst.i18n.i18n"
+				}
+			},
+			"": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "None",
+					"useBatch": false
+				},
+				"dataSource": "ZCM_SERVICEORDER_SRV",
+				"preload": true
+			},
+			"productModel": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "None",
+					"useBatch": false
+				},
+				"dataSource": "ZCM_PRODUCT_SRV",
+				"preload": true
+			},
+			"partnerModel": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "None",
+					"useBatch": false
+				},
+				"dataSource": "ZCM_PARTNER_SRV",
+				"preload": true
+			},
+			"valueHelp": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "None",
+					"useBatch": false
+				},
+				"dataSource": "ZCM_VALUEHELPS_SRV",
+				"preload": true
+			},
+			"userModel": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "None",
+					"useBatch": false
+				},
+				"dataSource": "ZCM_USER_SRV",
+				"preload": true
+			}
+		},
+		"resources": {
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"async": true,
+				"viewPath": "crm.third_party_lgst.view",
+				"controlAggregation": "pages",
+				"controlId": "app",
+				"clearControlAggregation": false
+			},
+			"routes": [
+				{
+					"pattern": "createObject",
+					"name": "createObject",
+					"target": "ObjectCreate"
+				},
+				{
+					"pattern": "{guid}/selectedTab:?query:",
+					"name": "objectDetail",
+					"target": "ObjectDisplay"
+				},
+				{
+					"pattern": "edit/{guid}:?query:",
+					"name": "objectEdit",
+					"target": "ObjectEdit"
+				}
+			],
+			"targets": {
+				"ObjectCreate": {
+					"viewName": "ObjectCreate"
+				},
+				"ObjectDisplay": {
+					"viewName": "ObjectDisplay"
+				},
+				"ObjectEdit": {
+					"viewName": "ObjectEdit"
+				}
+			}
+		}
+	},
+	"sap.platform.abap": {
+		"uri": "/sap/bc/ui5_ui5/sap/zcrm_3pl/webapp",
+		"_version": "1.1.0"
+	}
+}

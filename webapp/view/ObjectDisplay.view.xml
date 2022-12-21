@@ -1,0 +1,662 @@
+<mvc:View controllerName="crm.third_party_lgst.controller.ObjectDisplay" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:m="sap.m" xmlns:f="sap.ui.layout.form" xmlns:uxap="sap.uxap" xmlns:layout="sap.ui.layout" xmlns:table="sap.ui.table"
+	xmlns:unified="sap.ui.unified" xmlns:suite="sap.suite.ui.commons" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:v="sap.ui.comp.variants"
+	xmlns:upload="sap.m.upload">
+	<uxap:ObjectPageLayout id="opLayout" navigate="onSectionChange"  showTitleInHeaderContent="false"
+		showHeaderContent="true" showEditHeaderButton="false" showFooter="false" class="sapUiSizeCompact" flexEnabled="true">
+		<uxap:headerTitle>
+			<uxap:ObjectPageHeader objectTitle="{i18n>detailTitle}" objectSubtitle="{detail>/ObjectId}" isObjectIconAlwaysVisible="false"
+				isObjectTitleAlwaysVisible="true" isObjectSubtitleAlwaysVisible="true" showPlaceholder="true">
+				<uxap:navigationBar>
+					<m:Bar>
+						<m:contentLeft>
+							<m:Button type="Back" press="onNavBack"/>
+						</m:contentLeft>
+					</m:Bar>
+				</uxap:navigationBar>
+				<uxap:actions>
+					<!--<m:Button text="{i18n>confirmation}" type="Emphasized" press="handleSendToConfirm"/>-->
+					<!--<m:Button text="{i18n>copy}" type="Emphasized" press="handleCopyDoc"/>-->
+					<!--<m:Button text="{i18n>buttonDownload}" type="Emphasized" press="handleDownloadPDF"/>-->
+					<m:Button text="{i18n>buttonTextEdit}" type="Emphasized" press="onEdit"/>
+				</uxap:actions>
+			</uxap:ObjectPageHeader>
+		</uxap:headerTitle>
+		<uxap:headerContent>
+			<f:Form editable="false" width="100%">
+				<f:layout>
+					<f:ResponsiveGridLayout labelSpanXL="6" labelSpanL="6" labelSpanM="6" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+						emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="true"/>
+				</f:layout>
+				<f:title>
+					<core:Title id="Title1" text="Kayıt Özeti"/>
+				</f:title>
+				<f:formContainers>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="{i18n>custName}">
+								<f:fields>
+									<m:Text id="customerSum"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>custSeg}">
+								<f:fields>
+									<m:Text id="idCustSeg"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>dealer}">
+								<f:fields>
+									<m:Text id="dealer"/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="{i18n>status}">
+								<f:fields>
+									<m:Text text="{path:'detail>/Tostatus/Txt30'}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>statusReason}">
+								<f:fields>
+									<m:Text text="{path:'detail>/StatusReasonTxt'}"/>
+								</f:fields>
+							</f:FormElement>
+							<!--<f:FormElement label="{i18n>docType}">-->
+							<!--	<f:fields>-->
+							<!--		<m:Text text="{edit>/ToCustomerh/Zz1BelgeTipiSrhTxt}"/>-->
+							<!--	</f:fields>-->
+							<!--</f:FormElement>-->
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="{i18n>createdBy}">
+								<f:fields>
+									<m:Text text="{detail>/CreatedByText}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>createdAt}">
+								<f:fields>
+									<m:Text text="{path:'detail>/NowCreatedAt', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd.MM.yyyy'}}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>changedAt}">
+								<f:fields>
+									<m:Text text="{path:'detail>/ChangedAtDate', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd.MM.yyyy'}}"/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form>
+		</uxap:headerContent>
+		<uxap:sections>
+			<uxap:ObjectPageSection id="customerSection" title="{i18n>custInf}" titleUppercase="false">
+				<uxap:ObjectPageSubSection>
+					<uxap:blocks>
+						<f:Form editable="false">
+							<f:layout>
+								<f:ResponsiveGridLayout labelSpanXL="6" labelSpanL="6" labelSpanM="6" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+									emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false"/>
+							</f:layout>
+							<f:formContainers>
+								<f:FormContainer>
+									<f:formElements>
+										<f:FormElement label="{i18n>custName}">
+											<f:fields>
+												<m:Text id="customer"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="{i18n>custTel}">
+											<f:fields>
+												<m:Text id="customerTel"/>
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+								<f:FormContainer>
+									<f:formElements>
+										<f:FormElement id="recordCountFE" label="{i18n>recordCount}">
+											<f:fields>
+												<!--<m:Text id="recorsdCount" text="{detail>/ToCustomerh/Zz1YasalSurecMiSrhTxt}"/>-->
+												<m:Text id="recordCount"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement id="productRecordCountFE" label="{i18n>productRecordCount}">
+											<f:fields>
+												<m:Text id="productRecordCount"/>
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+							</f:formContainers>
+						</f:Form>
+					</uxap:blocks>
+				</uxap:ObjectPageSubSection>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection id="generalSection" title="{i18n>generalInf}" titleUppercase="false">
+				<uxap:ObjectPageSubSection>
+					<uxap:blocks>
+						<f:Form editable="false">
+							<f:layout>
+								<f:ResponsiveGridLayout labelSpanXL="6" labelSpanL="6" labelSpanM="6" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+									emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false"/>
+							</f:layout>
+							<f:formContainers>
+								<f:FormContainer>
+									<f:formElements>
+										<f:FormElement label="{i18n>product}">
+											<f:fields>
+												<m:Text text="{detail>/ToRefObj/TextObject}"/>
+												<m:Text text="{detail>/ToRefObj/ProductId}"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="{i18n>billNo}">
+											<f:fields>
+												<m:Text text="{detail>/ToCustomerh/Zz1FaturaNoSrh}"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="{i18n>billDate}">
+											<f:fields>
+												<m:Text text="{path:'detail>/ToCustomerh/Zz1FaturaTarihSrh', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd.MM.yyyy'}}"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="{i18n>guaranteed}">
+											<f:fields>
+												<m:Switch enabled="false" change="acIndicatorChange" state="{path:'detail>/ToPricing/AcIndicator', formatter:'.acIndFormatter'}"
+													customTextOn="{i18n>yes}" customTextOff="{i18n>no}"/>
+												<!--<m:Text text="{detail>/ToPricing/AcIndicatorTxt}"/>-->
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+								<f:FormContainer>
+									<f:formElements>
+										<f:FormElement label="{i18n>salePoint}">
+											<f:fields>
+												<m:Text text="{detail>/ToCustomerh/Zz1SatisNoktasiSrhTxt}"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement id="plantFE" label="{i18n>plant}">
+											<f:fields>
+												<m:Text id="plant" text="{detail>/ToProductInfo/ZzfiiliUyTxt}"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement id="materialGroupFE" label="{i18n>materialGroup}">
+											<f:fields>
+												<m:Text id="materialGroup" text="{detail>/ToProductInfo/MatklTxt}"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement id="returnToSupplierFE" label="{i18n>returnToSupplier}">
+											<f:fields>
+												<m:Switch enabled="false" id="returnToSupplier" state="{path:'detail>/ToCustomerh/Zz1TicariurunIadeSrh', formatter:'.xfeldToBool'}"
+													customTextOn="{i18n>yes}" customTextOff="{i18n>no}"/>
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+							</f:formContainers>
+						</f:Form>
+					</uxap:blocks>
+				</uxap:ObjectPageSubSection>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection id="recordInfoTab" title="{i18n>recordInfo}" titleUppercase="false">
+				<uxap:ObjectPageSubSection>
+					<uxap:blocks>
+						<f:Form editable="false">
+							<f:layout>
+								<f:ResponsiveGridLayout labelSpanXL="6" labelSpanL="6" labelSpanM="6" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+									emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false"/>
+							</f:layout>
+							<f:formContainers>
+								<f:FormContainer>
+									<f:formElements>
+										<f:FormElement label="{i18n>createdAt}">
+											<f:fields>
+												<m:Text text="{path:'detail>/NowCreatedAt', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd.MM.yyyy'}}"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="{i18n>changedAt}">
+											<f:fields>
+												<m:Text text="{path:'detail>/ChangedAtDate', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd.MM.yyyy'}}"/>
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+								<f:FormContainer>
+									<f:formElements>
+										<f:FormElement label="{i18n>createdBy}">
+											<f:fields>
+												<m:Text text="{detail>/CreatedByText}"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="{i18n>completedAt}">
+											<f:fields>
+												<m:Text text="{path:'detail>/ChangedAtDate', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd.MM.yyyy'}}"/>
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+							</f:formContainers>
+						</f:Form>
+					</uxap:blocks>
+				</uxap:ObjectPageSubSection>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection id="itemSection" title="{i18n>itemTitle}" titleUppercase="false">
+				<uxap:ObjectPageSubSection>
+					<uxap:blocks>
+						<table:Table class="sapUiTinyMarginBottom" id="idServiceItemTable" rows="{ path: 'detail>/ToSpItems/results'}" selectionMode="None"
+							visibleRowCount="10" editable="false">
+							<table:extension>
+								<m:OverflowToolbar style="Clear">
+									<m:Title text="Yedek Parça"/>
+								</m:OverflowToolbar>
+							</table:extension>
+							<table:columns>
+								<table:Column hAlign="Center">
+									<m:Label text="{i18n>itemNo}"/>
+									<table:template>
+										<m:Text text="{path: 'detail>NumberInt'}"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center">
+									<m:Label text="{i18n>orderProd}"/>
+									<table:template>
+										<m:Text text="{path: 'detail>OrderedProd'}"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center">
+									<m:Label text="{i18n>quan}"/>
+									<table:template>
+										<m:Text text="{path: 'detail>Quantity'}"/>
+									</table:template>
+								</table:Column>
+								<!--<table:Column hAlign="Center">-->
+								<!--	<m:Label text="{i18n>curr}"/>-->
+								<!--	<table:template>-->
+								<!--		<m:Text text="{path: 'detail>ProcessQtyUnit'}"/>-->
+								<!--	</table:template>-->
+								<!--</table:Column>-->
+								<table:Column hAlign="Center">
+									<m:Label text="{i18n>prod}"/>
+									<table:template>
+										<m:Text text="{path: 'detail>Description'}"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center">
+									<m:Label text="{i18n>acInd}"/>
+									<table:template>
+										<m:Switch enabled="false" change="acIndicatorChange" state="{path:'detail>AcIndicator', formatter:'.acIndFormatter'}"
+											customTextOn="{i18n>yes}" customTextOff="{i18n>no}"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center">
+									<m:Label text="{i18n>itemType}"/>
+									<table:template>
+										<m:Text text="{path: 'detail>ItemTypeDescr'}"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center">
+									<m:Label text="{i18n>netValue}"/>
+									<table:template>
+										<m:Text text="{path: 'detail>NetValue'}"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center">
+									<m:Label text="{i18n>orderNo}"/>
+									<table:template>
+										<m:Text text="{path: 'detail>DocObj'}"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center">
+									<m:Label text="{i18n>orderDate}"/>
+									<table:template>
+										<m:Text text="{path: 'detail>DocCreateDate'}"/>
+									</table:template>
+								</table:Column>
+								<table:Column hAlign="Center">
+									<m:Label text="{i18n>orderEndDate}"/>
+									<table:template>
+										<m:Text text="{path: 'detail>DocEndDate'}"/>
+									</table:template>
+								</table:Column>
+								<!--<table:Column hAlign="Center">-->
+								<!--	<m:Label text="{i18n>curr}"/>-->
+								<!--	<table:template>-->
+								<!--		<m:Text text="{path: 'detail>Currency'}"/>-->
+								<!--	</table:template>-->
+								<!--</table:Column>-->
+								<table:Column hAlign="Center">
+									<m:Label text="{i18n>status}"/>
+									<table:template>
+										<m:Text text="{path: 'detail>Statustxt'}"/>
+									</table:template>
+								</table:Column>
+							</table:columns>
+						</table:Table>
+					</uxap:blocks>
+				</uxap:ObjectPageSubSection>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection id="noteSection" title="{i18n>titleNotes}" titleUppercase="false">
+				<uxap:ObjectPageSubSection>
+					<uxap:blocks>
+						<m:List items="{detail>/ToTexts/results}" growing="true" growingThreshold="4" growingScrollToLoad="false" backgroundDesign="Solid">
+							<m:items>
+								<m:FeedListItem icon="sap-icon://notes" sender="{detail>Tdtext}" text="{detail>ConcLines}" info="{detail>Tdfuser}"
+									timestamp="{path: 'detail>Tdfdate', type:'sap.ui.model.type.DateTime', formatOptions: { style: 'medium'}}"/>
+							</m:items>
+						</m:List>
+					</uxap:blocks>
+				</uxap:ObjectPageSubSection>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection id="attachSection" title="{i18n>titleAttachments}" titleUppercase="false">
+				<uxap:ObjectPageSubSection>
+					<uxap:blocks>
+						<m:Table id="idTable" mode="None" delete="handleAttachmentItemPress"
+							items="{path: 'detail>/ToAttachments/results',sorter: { path: 'AttachTypeTxt', descending: false, group: '.getGroup' }, groupHeaderFactory: '.getGroupHeader'}">
+							<m:columns>
+								<m:Column>
+									<m:Text text="Ad"/>
+								</m:Column>
+								<m:Column>
+									<m:Text text="Ek Tipi"/>
+								</m:Column>
+								<m:Column>
+									<m:Text text="Oluşturan"/>
+								</m:Column>
+								<m:Column>
+									<m:Text text="Tarih"/>
+								</m:Column>
+							</m:columns>
+							<m:items>
+								<m:ColumnListItem>
+									<m:cells>
+										<m:Link text="{detail>Filename}" target="_blank" href="{detail>UrlToDisplay}"/>
+										<m:Text text="{detail>ContentType}"/>
+										<m:Text text="{detail>CreatedBy}"/>
+										<m:Text text="{path: 'detail>CreatedAt', type:'sap.ui.model.type.DateTime', formatOptions: { style: 'medium'}}"/>
+									</m:cells>
+								</m:ColumnListItem>
+							</m:items>
+						</m:Table>
+						<!--<m:VBox>-->
+						<!--	<m:HBox justifyContent="SpaceBetween">-->
+								<!--<m:VBox>-->
+								<!--<m:Title text="Kerem" />-->
+						<!--		<upload:UploadSet class="sapUiTinyMarginEnd" uploadEnabled="false" uploadButtonInvisible="true" id="UploadSet"-->
+						<!--			items="{detail>/ToAttachments01/results}">-->
+						<!--			<upload:layoutData>-->
+						<!--				<m:FlexItemData growFactor="1"/>-->
+						<!--			</upload:layoutData>-->
+						<!--			<upload:toolbar>-->
+						<!--				<m:OverflowToolbar>-->
+						<!--					<m:Title text="Müşteriden Ürün Fotoğrafı"/>-->
+						<!--					<m:ToolbarSpacer/>-->
+						<!--				</m:OverflowToolbar>-->
+						<!--			</upload:toolbar>-->
+						<!--			<upload:items>-->
+						<!--				<upload:UploadSetItem enabledRemove="false" enabledEdit="false" visibleEdit="false" visibleRemove="false" fileName="{detail>Filename}"-->
+						<!--					mediaType="{detail>ContentType}" url="{detail>UrlToDisplay}"></upload:UploadSetItem>-->
+						<!--			</upload:items>-->
+						<!--		</upload:UploadSet>-->
+								<!--</m:VBox>-->
+						<!--		<upload:UploadSet uploadEnabled="false" uploadButtonInvisible="true" id="UploadSet1" items="{detail>/ToAttachments02/results}">-->
+						<!--			<upload:layoutData>-->
+						<!--				<m:FlexItemData growFactor="1"/>-->
+						<!--			</upload:layoutData>-->
+						<!--			<upload:toolbar>-->
+						<!--				<m:OverflowToolbar>-->
+						<!--					<m:Title text="Fatura Fotoğrafı"/>-->
+						<!--					<m:ToolbarSpacer/>-->
+						<!--				</m:OverflowToolbar>-->
+						<!--			</upload:toolbar>-->
+						<!--			<upload:items>-->
+						<!--				<upload:UploadSetItem enabledRemove="false" enabledEdit="false" visibleEdit="false" visibleRemove="false" fileName="{detail>Filename}"-->
+						<!--					mediaType="{detail>ContentType}" url="{detail>UrlToDisplay}"></upload:UploadSetItem>-->
+						<!--			</upload:items>-->
+						<!--		</upload:UploadSet>-->
+						<!--	</m:HBox>-->
+						<!--	<m:HBox justifyContent="SpaceBetween">-->
+						<!--		<upload:UploadSet class="sapUiTinyMarginEnd" uploadEnabled="false" uploadButtonInvisible="true" id="UploadSet2"-->
+						<!--			items="{detail>/ToAttachments03/results}">-->
+						<!--			<upload:layoutData>-->
+						<!--				<m:FlexItemData growFactor="1"/>-->
+						<!--			</upload:layoutData>-->
+						<!--			<upload:toolbar>-->
+						<!--				<m:OverflowToolbar>-->
+						<!--					<m:Title text="Öncesi Fotoğrafı"/>-->
+						<!--					<m:ToolbarSpacer/>-->
+						<!--				</m:OverflowToolbar>-->
+						<!--			</upload:toolbar>-->
+						<!--			<upload:items>-->
+						<!--				<upload:UploadSetItem enabledRemove="false" enabledEdit="false" visibleEdit="false" visibleRemove="false" fileName="{detail>Filename}"-->
+						<!--					mediaType="{detail>ContentType}" url="{detail>UrlToDisplay}"></upload:UploadSetItem>-->
+						<!--			</upload:items>-->
+						<!--		</upload:UploadSet>-->
+						<!--		<upload:UploadSet uploadEnabled="false" uploadButtonInvisible="true" id="UploadSet3" items="{detail>/ToAttachments04/results}">-->
+						<!--			<upload:layoutData>-->
+						<!--				<m:FlexItemData growFactor="1"/>-->
+						<!--			</upload:layoutData>-->
+						<!--			<upload:toolbar>-->
+						<!--				<m:OverflowToolbar>-->
+						<!--					<m:Title text="Sonrası Fotoğrafı"/>-->
+						<!--					<m:ToolbarSpacer/>-->
+						<!--				</m:OverflowToolbar>-->
+						<!--			</upload:toolbar>-->
+						<!--			<upload:items>-->
+						<!--				<upload:UploadSetItem enabledRemove="false" enabledEdit="false" visibleEdit="false" visibleRemove="false" fileName="{detail>Filename}"-->
+						<!--					mediaType="{detail>ContentType}" url="{detail>UrlToDisplay}"></upload:UploadSetItem>-->
+						<!--			</upload:items>-->
+						<!--		</upload:UploadSet>-->
+						<!--	</m:HBox>-->
+						<!--</m:VBox>-->
+					</uxap:blocks>
+				</uxap:ObjectPageSubSection>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection id="errorSection" title="{i18n>errorHeader}" titleUppercase="false">
+				<uxap:ObjectPageSubSection>
+					<f:Form editable="false">         
+						<f:layout>
+							<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4"
+								emptySpanM="4" emptySpanS="4" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="true"/>
+						</f:layout>
+						<f:formContainers>
+							<f:FormContainer>
+								<f:formElements>
+									<f:FormElement label="{i18n>sourceOfError}">
+										<f:fields>
+											<m:Text text="{detail>/ToCustomerh/Zz1HKaynagiSdSrhTxt}"/>
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement label="{i18n>category1}">
+										<f:fields>
+											<m:Text id="soeCB1"/>
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement label="{i18n>category2}">
+										<f:fields>
+											<m:Text id="soeCB2"/>
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement label="{i18n>category3}">
+										<f:fields>
+											<m:Text id="soeCB3"/>
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement label="{i18n>category4}">
+										<f:fields>
+											<m:Text id="soeCB4"/>
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement label="{i18n>category5}">
+										<f:fields>
+											<m:Text id="soeCB5"/>
+										</f:fields>
+									</f:FormElement>
+								</f:formElements>
+							</f:FormContainer>
+							<!--<f:FormContainer title="Kalite">-->
+							<!--	<f:formElements>-->
+							<!--		<f:FormElement label="{i18n>sourceOfError}">-->
+							<!--			<f:fields>-->
+							<!--				<m:Text text="{detail>/ToCustomerh/Zz1HKaynakKaliteSrhTxt}"/>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--		<f:FormElement label="{i18n>category1}">-->
+							<!--			<f:fields>-->
+							<!--				<m:Text text="{detail>/ToCustomerh/Zz1Kat1KaliteSrhTxt}"/>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--		<f:FormElement label="{i18n>category2}">-->
+							<!--			<f:fields>-->
+							<!--				<m:Text text="{detail>/ToCustomerh/Zz1Kat2KaliteSrhTxt}"/>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--		<f:FormElement label="{i18n>category3}">-->
+							<!--			<f:fields>-->
+							<!--				<m:Text text="{detail>/ToCustomerh/Zz1Kat3KaliteSrhTxt}"/>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--		<f:FormElement label="{i18n>category4}">-->
+							<!--			<f:fields>-->
+							<!--				<m:Text text="{detail>/ToCustomerh/Zz1Kat4KaliteSrhTxt}"/>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--		<f:FormElement label="{i18n>category5}">-->
+							<!--			<f:fields>-->
+							<!--				<m:Text text="{detail>/ToCustomerh/Zz1Kat5KaliteSrhTxt}"/>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--	</f:formElements>-->
+							<!--</f:FormContainer>-->
+							<!--<f:FormContainer title="Teknik Destek/Garanti">-->
+							<!--	<f:formElements>-->
+							<!--		<f:FormElement label="{i18n>sourceOfError}">-->
+							<!--			<f:fields>-->
+							<!--				<m:Text text="{detail>/ToCustomerh/Zz1HKaynakGarantiSrhTxt}"/>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--		<f:FormElement label="{i18n>category1}">-->
+							<!--			<f:fields>-->
+							<!--				<m:Text text="{detail>/ToCustomerh/Zz1Kat1GarantiSrhTxt}"/>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--		<f:FormElement label="{i18n>category2}">-->
+							<!--			<f:fields>-->
+							<!--				<m:Text text="{detail>/ToCustomerh/Zz1Kat2GarantiSrhTxt}"/>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--		<f:FormElement label="{i18n>category3}">-->
+							<!--			<f:fields>-->
+							<!--				<m:Text text="{detail>/ToCustomerh/Zz1Kat3GarantiSrhTxt}"/>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--		<f:FormElement label="{i18n>category4}">-->
+							<!--			<f:fields>-->
+							<!--				<m:Text text="{detail>/ToCustomerh/Zz1Kat4GarantiSrhTxt}"/>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--		<f:FormElement label="{i18n>category5}">-->
+							<!--			<f:fields>-->
+							<!--				<m:Text text="{detail>/ToCustomerh/Zz1Kat5GarantiSrhTxt}"/>-->
+							<!--			</f:fields>-->
+							<!--		</f:FormElement>-->
+							<!--	</f:formElements>-->
+							<!--</f:FormContainer>-->
+						</f:formContainers>
+					</f:Form>
+				</uxap:ObjectPageSubSection>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection id="histSections" title="{i18n>changeHist}" titleUppercase="false">
+				<uxap:ObjectPageSubSection>
+					<table:Table id="idHistoryTable" rows="{detail>/ToChangeHistory/results}" selectionMode="None" visibleRowCount="5" threshold="10">
+						<table:extension>
+							<m:Toolbar>
+								<m:content></m:content>
+							</m:Toolbar>
+						</table:extension>
+						<table:columns>
+							<table:Column sortProperty="Indtext" filterProperty="Indtext">
+								<table:menu>
+									<unified:Menu id="historyContextMenu">
+										<unified:items>
+											<unified:MenuItem text="Temizle" select="handleHistoryClearFilter" icon="sap-icon://clear-filter"/>
+											<unified:MenuItem text="Artan düzeyde sırala" select=".onHistoryOperationSort($event, 'asc')" icon="sap-icon://sort-ascending"/>
+											<unified:MenuItem text="Azalan düzeyde sırala" select=".onHistoryOperationSort($event, 'desc')" icon="sap-icon://sort-descending"/>
+										</unified:items>
+									</unified:Menu>
+								</table:menu>
+								<m:Label text="{i18n>operation}"/>
+								<table:template><m:Text text="{detail>Indtext}"/></table:template>
+							</table:Column>
+							<table:Column>
+								<m:Label text="{i18n>changeLevel}"/>
+								<table:template><m:Text text="{detail>Leveltxt}"/></table:template>
+							</table:Column>
+							<table:Column>
+								<m:Label text="{i18n>newValue}"/>
+								<table:template><m:Text text="{detail>FNew}"/></table:template>
+							</table:Column>
+							<table:Column>
+								<m:Label text="{i18n>oldValue}"/>
+								<table:template><m:Text text="{detail>FOld}"/></table:template>
+							</table:Column>
+							<table:Column>
+								<m:Label text="{i18n>changedBy}"/>
+								<table:template><m:Text text="{detail>Username}"/></table:template>
+							</table:Column>
+							<table:Column hAlign="End">
+								<m:Label text="{i18n>changedDate}"/>
+								<table:template><m:Text text="{path:'detail>Udate', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd.MM.yyyy' , UTC: true }}"/></table:template>
+							</table:Column>
+							<table:Column hAlign="End">
+								<m:Label text="{i18n>changedTime}"/>
+								<table:template><m:Text text="{ path:'detail>Utime', type: 'sap.ui.model.odata.type.Time', formatOptions: { pattern : 'HH:mm:ss' } }"/></table:template>
+							</table:Column>
+						</table:columns>
+					</table:Table>
+					<!--<m:Table items="{detail>/ToChangeHistory/results}">-->
+					<!--	<m:columns>-->
+					<!--		<m:Column>-->
+					<!--			<m:Text text="İşlem"/>-->
+					<!--		</m:Column>-->
+					<!--		<m:Column>-->
+					<!--			<m:Text text="Değişiklik düzeyi"/>-->
+					<!--		</m:Column>-->
+					<!--		<m:Column>-->
+					<!--			<m:Text text="Yeni Değer"/>-->
+					<!--		</m:Column>-->
+					<!--		<m:Column>-->
+					<!--			<m:Text text="Eski Değer"/>-->
+					<!--		</m:Column>-->
+					<!--		<m:Column>-->
+					<!--			<m:Text text="Değiştiren"/>-->
+					<!--		</m:Column>-->
+					<!--		<m:Column>-->
+					<!--			<m:Text text="Değişiklik Tarihi"/>-->
+					<!--		</m:Column>-->
+					<!--		<m:Column>-->
+					<!--			<m:Text text="Değişiklik Saati"/>-->
+					<!--		</m:Column>-->
+					<!--	</m:columns>-->
+					<!--	<m:items>-->
+					<!--		<m:ColumnListItem vAlign="Middle">-->
+					<!--			<m:cells>-->
+					<!--				<m:Text text="{detail>Indtext}"/>-->
+					<!--				<m:Text text="{detail>Leveltxt}"/>-->
+					<!--				<m:Text text="{detail>FNew}"/>-->
+					<!--				<m:Text text="{detail>FOld}"/>-->
+					<!--				<m:Text text="{detail>Username}"/>-->
+					<!--				<m:Text text="{path:'detail>Udate', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd.MM.yyyy'}}"/>-->
+					<!--				<m:Text text="{path:'detail>Utime', type: 'sap.ui.model.odata.type.Time', formatOptions: { pattern : 'HH:mm:ss' }}"/>-->
+					<!--			</m:cells>-->
+					<!--		</m:ColumnListItem>-->
+					<!--	</m:items>-->
+					<!--</m:Table>-->
+				</uxap:ObjectPageSubSection>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

@@ -1,0 +1,65 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:filterbar="sap.ui.comp.filterbar">
+	<Dialog>
+		<customHeader>
+			<Bar>
+				<contentMiddle>
+					<Title text="{i18n>suggestedProducts}"/>
+				</contentMiddle>
+			</Bar>
+		</customHeader>
+		<content>
+			<Table noDataText=" " items="{productModel>/SparePartProposalSet}" mode="MultiSelect" growing="true" width="100%">
+				<!--<headerToolbar>-->
+				<!--	<OverflowToolbar>-->
+				<!--		<content>-->
+				<!--			<ToolbarSpacer/>-->
+				<!--			<Label text="Max Rows"/>-->
+				<!--			<Input width="5rem" id="custMaxRows" value="100"/>-->
+				<!--		</content>-->
+				<!--	</OverflowToolbar>-->
+				<!--</headerToolbar>-->
+				<columns>
+					<Column>
+						<Text text="Ürün Tanıtıcısı"/>
+					</Column>
+					<Column>
+						<Text text="Ürün Açıklaması"/>
+					</Column>
+					<!--<Column>-->
+					<!--	<Text text="Ürün Tipi"/>-->
+					<!--</Column>-->
+					<Column>
+						<Text text="Miktar"/>
+					</Column>
+					<Column>
+						<Text text="Birim"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem  type="Active"
+						press="handleSparePartListItemPress">
+						<cells>
+							<Text text="{productModel>ObjectId}"/>
+							<Text text="{productModel>ObjectDescr}"/>
+							<!--<Text text="{productModel>TypeDescr}"/>-->
+							<Text text="{productModel>Quantity}"/>
+							<Text text="{productModel>Unit}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			<!--<List noDataText=" " items="{ path: 'customerModel>/SearchSoldToSet' }" mode="MultiSelect" growing=" true" width="100%">-->
+			<!--	<items>-->
+			<!--		<StandardListItem title="{customerModel>Partner}" description="{customerModel>McName1} {customerModel>McName2}" type="Active"-->
+			<!--			press="handleCustomerListItemPress"/>-->
+			<!--	</items>-->
+			<!--</List>-->
+		</content>
+		<beginButton>
+			<Button text="{i18n>buttonTextSelect}" press="handleSparePartSelect"></Button>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>buttonTextCancel}" press="handleSparePartCancel"></Button>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

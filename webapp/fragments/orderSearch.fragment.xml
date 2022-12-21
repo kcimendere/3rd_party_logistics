@@ -1,0 +1,132 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:filterbar="sap.ui.comp.filterbar">
+	<Dialog >
+		<customHeader>
+			<Bar>
+				<contentMiddle>
+					<Title text="Siparişler" id="idFragmentTitleOrder"/>
+				</contentMiddle>
+				<!--<contentRight>-->
+				<!--	<Button id="idcustomerSearchFra" icon="sap-icon://add" press="onShowNewCustTypeSelection" visible="true"/>-->
+				<!--</contentRight>-->
+			</Bar>
+		</customHeader>
+		<content>
+			<!--<filterbar:FilterBar showFilterConfiguration="false" useToolbar="false" showGoOnFB="true" search="handleCustomerSearch">-->
+			<!--	<filterbar:filterItems>-->
+			<!--		<filterbar:FilterItem label="{i18n>labelNameF}" name="nameSearchCustFbItem1">-->
+			<!--			<filterbar:control>-->
+			<!--				<SearchField id="idSearchCustFbControl1" showSearchButton="false" search="handleCustomerSearch"/>-->
+			<!--			</filterbar:control>-->
+			<!--		</filterbar:FilterItem>-->
+			<!--		<filterbar:FilterItem label="{i18n>labelNameL}" name="nameSearchCustFbItem2">-->
+			<!--			<filterbar:control>-->
+			<!--				<SearchField id="idSearchCustFbControl2" showSearchButton="false" search="handleCustomerSearch"/>-->
+			<!--			</filterbar:control>-->
+			<!--		</filterbar:FilterItem>-->
+			<!--		<filterbar:FilterItem label="{i18n>labelCustNo}" name="nameSearchCustFbItem3">-->
+			<!--			<filterbar:control>-->
+			<!--				<SearchField id="idSearchCustFbControl3" showSearchButton="false" search="handleCustomerSearch"/>-->
+			<!--			</filterbar:control>-->
+			<!--		</filterbar:FilterItem>-->
+			<!--		<filterbar:FilterItem label="{i18n>labelTel}" name="nameSearchCustFbItem4">-->
+			<!--			<filterbar:control>-->
+			<!--				<SearchField id="idSearchCustFbControl4" placeholder="5*********" showSearchButton="false" search="handleCustomerSearch"/>-->
+			<!--			</filterbar:control>-->
+			<!--		</filterbar:FilterItem>-->
+			<!--<filterbar:FilterItem label="{i18n>labelTcknTaxNum}" name="nameSearchCustFbItem5">-->
+			<!--	<filterbar:control>-->
+			<!--		<SearchField id="idSearchCustFbControl5" showSearchButton="false" search="handleCustomerSearch"/>-->
+			<!--	</filterbar:control>-->
+			<!--</filterbar:FilterItem>-->
+			<!--	</filterbar:filterItems>-->
+			<!--</filterbar:FilterBar>-->
+			<Table noDataText=" " items="{ path: '/SdOrdersSet' }"  width="100%">
+				<headerToolbar>
+					<OverflowToolbar>
+						<content>
+							<ToolbarSpacer/>
+							<!--<Label text="Max Rows"/>-->
+							<!--<Input width="5rem" id="custMaxRows" value="100"/>-->
+						</content>
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column minScreenWidth="Desktop" demandPopin="true">
+						<Text text="Sipariş No"/>
+					</Column>
+					<Column minScreenWidth="Desktop" demandPopin="true">
+						<Text text="Sipariş Tarihi"/>
+					</Column>
+					<Column minScreenWidth="Desktop" demandPopin="true">
+						<Text text="Sipariş Durumu"/>
+					</Column>
+					<Column minScreenWidth="Desktop" demandPopin="true">
+						<Text text="Fatura No"/>
+					</Column>
+					<Column minScreenWidth="Desktop" demandPopin="true">
+						<Text text="Fatura Tarihi"/>
+					</Column>
+					<Column minScreenWidth="Desktop" demandPopin="true">
+						<Text text="Ürün ID"/>
+					</Column>
+					<Column minScreenWidth="Desktop" demandPopin="true">
+						<Text text="Ürün Adı"/>
+					</Column>
+					<Column minScreenWidth="Desktop" demandPopin="true">
+						<Text text="Ürün Grubu"/>
+					</Column>
+					<Column minScreenWidth="Desktop" demandPopin="true">
+						<Text text="Marka"/>
+					</Column>
+					<Column minScreenWidth="Desktop" demandPopin="true">
+						<Text text="Satış Noktası Tipi "/>
+					</Column>
+					<Column minScreenWidth="Desktop" demandPopin="true">
+						<Text text="Satış Noktası Kodu"/>
+					</Column>
+					<Column minScreenWidth="Desktop" demandPopin="true">
+						<Text text="Satış Noktası Tanımı"/>
+					</Column>
+					<Column minScreenWidth="Desktop" demandPopin="true">
+						<Text text="Bölge"/>
+					</Column>
+					<Column minScreenWidth="Desktop" demandPopin="true">
+						<Text text="Depo"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem type="Active" press="handleOrderListItemPress">
+						<cells>
+							<Text text="{SdOrderNo}"/>
+							<Text text="{path:'SdOrderDate', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd.MM.yyyy'}}"/>
+							<Text text="{SdOrderStatus}"/>
+							<Text text="{BillNo}"/>
+							<Text text="{path:'BillDate', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd.MM.yyyy'}}"/>
+							<Text text="{ProductId}"/>
+							<Text text="{ProductName}"/>
+							<Text text="{ProductGroup}"/>
+							<Text text="{Brand}"/>
+							<Text text="{SalesPointTypeTxt}"/>
+							<Text text="{SalesPoint}"/>
+							<Text text="{SalesPointTxt}"/>
+							<Text text="{RegionTxt}"/>
+							<Text text="{LgortTxt}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			<!--<List noDataText=" " items="{ path: 'customerModel>/SearchSoldToSet' }" mode="MultiSelect" growing=" true" width="100%">-->
+			<!--	<items>-->
+			<!--		<StandardListItem title="{customerModel>Partner}" description="{customerModel>McName1} {customerModel>McName2}" type="Active"-->
+			<!--			press="handleCustomerListItemPress"/>-->
+			<!--	</items>-->
+			<!--</List>-->
+		</content>
+		<!--<beginButton>-->
+		<!--	<Button text="{i18n>buttonTextSelect}" press="handleCustomerSelect"></Button>-->
+		<!--</beginButton>-->
+		<endButton>
+			<Button text="{i18n>buttonTextCancel}" press="handleOrderCancel"></Button>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>
